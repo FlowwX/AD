@@ -12,13 +12,30 @@ import Aufgabenblatt01.Liste;
  */
 public class ListeB extends Liste {
 
+	private Knoten<?> head;
+	private Knoten<?> tail;
+	
+	private int anzahlElemente;
+	
 	/* (non-Javadoc)
 	 * @see Aufgabenblatt01.Liste#insert(int, Aufgabenblatt01.Knoten)
 	 */
 	@Override
 	public void insert(int position, Knoten<?> element) {
-		// TODO Auto-generated method stub
-
+		
+		//prüfe auf unkorrekte werte
+		if(!(position > 0 && position < anzahlElemente+1)){
+			throw new IndexOutOfBoundsException();
+		}
+		
+		//erstes Element
+		if(head==null){
+			head = element;
+			tail = element;
+			((KnotenB)element).setNext(null);
+		}
+		
+		
 	}
 
 	/* (non-Javadoc)
