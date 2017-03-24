@@ -15,6 +15,10 @@ public class KnotenB extends Knoten<Integer> {
 	
 	private Knoten<?> next;
 
+	public KnotenB(Integer daten) {
+		super(daten);
+	}
+	
 	public Knoten<?> getPrev() {
 		return prev;
 	}

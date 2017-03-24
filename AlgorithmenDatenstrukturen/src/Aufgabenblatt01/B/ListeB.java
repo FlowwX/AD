@@ -37,6 +37,7 @@ public class ListeB extends Liste {
 		}
 		
 		
+		
 	}
 
 	/* (non-Javadoc)
@@ -82,6 +83,15 @@ public class ListeB extends Liste {
 	public void concat(Liste liste) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public static void main(String[] args) {
+		
+		Liste liste = new ListeB();
+		Knoten k1   = new KnotenB( 8 ); 
+		
+		liste.insert(0, k1);
+		
 	}
 
 }
