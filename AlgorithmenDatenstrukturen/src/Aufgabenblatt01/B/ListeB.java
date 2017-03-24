@@ -5,6 +5,7 @@ package Aufgabenblatt01.B;
 
 import Aufgabenblatt01.Knoten;
 import Aufgabenblatt01.Liste;
+import Aufgabenblatt01.Schluessel;
 
 /**
  * @author Florian Heuer
@@ -51,7 +52,7 @@ public class ListeB extends Liste {
 	 * @see Aufgabenblatt01.Liste#delete(java.lang.Integer)
 	 */
 	@Override
-	public void delete(Integer schluessel) {
+	public void delete(Schluessel schluessel) {
 		// TODO Auto-generated method stub
 
 	}
@@ -60,7 +61,7 @@ public class ListeB extends Liste {
 	 * @see Aufgabenblatt01.Liste#find(int)
 	 */
 	@Override
-	public int find(int schluessel) {
+	public int find(Schluessel schluessel) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

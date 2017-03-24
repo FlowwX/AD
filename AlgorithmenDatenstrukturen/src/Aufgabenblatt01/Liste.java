@@ -36,14 +36,14 @@ public abstract class Liste {
 	 * Löschung eines Elements mit übergebenen Schlüssel.
 	 * @param schluessel
 	 */
-	public abstract void delete( Integer schluessel );
+	public abstract void delete( Schluessel schluessel );
 	
 	/**
 	 * Suche nach einem Element mit zugehörigem Schluessel.
 	 * @param schluessel
 	 * @return
 	 */
-	public abstract int find( int schluessel );
+	public abstract int find( Schluessel schluessel );
 	
 	/**
 	 * Liefert ein Element mit Hilfe der Position.
