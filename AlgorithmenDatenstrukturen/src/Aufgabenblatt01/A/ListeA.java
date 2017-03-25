@@ -2,6 +2,7 @@ package Aufgabenblatt01.A;
 
 import Aufgabenblatt01.Knoten;
 import Aufgabenblatt01.Liste;
+import Aufgabenblatt01.Schluessel;
 
 
 /**
@@ -52,18 +53,23 @@ public class ListeA extends Liste{
 		anzahlElemente--;
 		
 	}
-
+	
 	@Override
 	public void delete(Schluessel schluessel) {
 		// TODO Auto-generated method stub
 		
 	}
 
+
+
 	@Override
 	public int find(Schluessel schluessel) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
+
 
 	@Override
 	public Knoten<?> retrieve(int position) {
@@ -88,9 +94,12 @@ public class ListeA extends Liste{
 		arraySize = newArraySize;
 		
 	}
+	
 	public static void main (String [] args) {
 		System.out.println();
 	}
+
+
 }
 
 
