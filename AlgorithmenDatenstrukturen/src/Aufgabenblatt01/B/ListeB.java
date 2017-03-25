@@ -16,7 +16,7 @@ public class ListeB extends Liste {
 	private Knoten<?> head;
 	private Knoten<?> tail;
 	
-	private int anzahlElemente;
+	private int anzahlElemente = 0;
 	
 	/* (non-Javadoc)
 	 * @see Aufgabenblatt01.Liste#insert(int, Aufgabenblatt01.Knoten)
@@ -25,18 +25,50 @@ public class ListeB extends Liste {
 	public void insert(int position, Knoten<?> element) {
 		
 		//prüfe auf unkorrekte werte
-		if(!(position > 0 && position < anzahlElemente+1)){
+		if(!(position > 0 && position <= (anzahlElemente+1))){
 			throw new IndexOutOfBoundsException();
 		}
 		
 		//erstes Element
-		if(head==null){
+		/*if(head==null){
 			head = element;
 			tail = element;
 			((KnotenB)element).setNext(null);
+		}*/
+		
+		KnotenB neuerKnoten = (KnotenB) element;
+		KnotenB alterKnoten = (KnotenB) retrieve(position);
+		KnotenB vorKnoten   = (KnotenB) retrieve(position-1);
+		KnotenB nachKnoten  = null;
+
+		try {
+			nachKnoten = (KnotenB) alterKnoten.getNext();
+		} catch (Exception e) {
+			
 		}
 		
+		if( vorKnoten == null){
+			neuerKnoten.setPrev( null );
+			head = neuerKnoten;
+		}
+
+		neuerKnoten.setNext( alterKnoten );
+		neuerKnoten.setPrev(vorKnoten);
 		
+		try {
+			vorKnoten.setNext(neuerKnoten);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+
+		try {
+			alterKnoten.setPrev(neuerKnoten);
+		} catch (Exception e) {
+			
+		}
+
+		anzahlElemente++;
 		
 	}
 
@@ -72,8 +104,19 @@ public class ListeB extends Liste {
 	 */
 	@Override
 	public Knoten<?> retrieve(int position) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		KnotenB knoten = (KnotenB) head;
+		
+		try {
+			for(int i=1; i<position; i++){
+				knoten = (KnotenB) knoten.getNext();
+			}
+		} catch (Exception e) {
+			knoten = null;
+		}
+
+		
+		return knoten;
 	}
 
 	/* (non-Javadoc)
@@ -88,10 +131,18 @@ public class ListeB extends Liste {
 	public static void main(String[] args) {
 		
 		Liste liste = new ListeB();
-		Knoten k1   = new KnotenB( 8 ); 
+		Knoten k1   = new KnotenB( 1 ); 
+		Knoten k2   = new KnotenB( 2 ); 
+		Knoten k3   = new KnotenB( 3 ); 
+		Knoten k4   = new KnotenB( 4 ); 
 		
-		liste.insert(0, k1);
+		liste.insert(1, k1);
+		liste.insert(2, k2);
+		liste.insert(3, k3);
 		
+		liste.insert(2, k4);
+		
+		System.out.println("finish!");
 	}
 
 }
