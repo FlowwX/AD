@@ -116,7 +116,7 @@ public class ListeA<T> extends Liste<T>{
 		anzahlOperationen++;
 		//??
 		
-		return (T) arrayLst[position].getDaten();
+		return (T) arrayLst[position];
 	}
 	
 
