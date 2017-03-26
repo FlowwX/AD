@@ -57,4 +57,7 @@ public abstract class Liste<T> {
 	 * @param liste
 	 */
 	public abstract void concat( Liste<?> liste );
+	
+	public abstract int getSize ();
+	
 }
