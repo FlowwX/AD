@@ -9,29 +9,29 @@ import Aufgabenblatt01.Knoten;
  * @author Florian Heuer
  *
  */
-public class KnotenB extends Knoten<Integer> {
+public class KnotenB<T> extends Knoten<T> {
 
-	private Knoten<?> prev;
+	private Knoten<T> prev;
 	
-	private Knoten<?> next;
+	private Knoten<T> next;
 
-	public KnotenB(Integer daten) {
+	public KnotenB(T daten) {
 		super(daten);
 	}
 	
-	public Knoten<?> getPrev() {
+	public Knoten<T> getPrev() {
 		return prev;
 	}
 
-	public void setPrev(Knoten<?> prev) {
+	public void setPrev(Knoten<T> prev) {
 		this.prev = prev;
 	}
 
-	public Knoten<?> getNext() {
+	public Knoten<T> getNext() {
 		return next;
 	}
 
-	public void setNext(Knoten<?> next) {
+	public void setNext(Knoten<T> next) {
 		this.next = next;
 	}
 	

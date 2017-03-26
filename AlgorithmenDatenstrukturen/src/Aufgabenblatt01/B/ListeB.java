@@ -11,10 +11,9 @@ import Aufgabenblatt01.Schluessel;
  * @author Florian Heuer
  *
  */
-public class ListeB extends Liste {
+public class ListeB<T> extends Liste<T> {
 
-	private Knoten<?> head;
-	private Knoten<?> tail;
+	private Knoten<T> head;
 	
 	private int anzahlElemente = 0;
 	
@@ -22,46 +21,43 @@ public class ListeB extends Liste {
 	 * @see Aufgabenblatt01.Liste#insert(int, Aufgabenblatt01.Knoten)
 	 */
 	@Override
-	public void insert(int position, Knoten<?> element) {
+	public void insert(int position, T element) {
 		
 		//prüfe auf unkorrekte werte
 		if(!(position > 0 && position <= (anzahlElemente+1))){
 			throw new IndexOutOfBoundsException();
 		}
 		
-		//erstes Element
-		/*if(head==null){
-			head = element;
-			tail = element;
-			((KnotenB)element).setNext(null);
-		}*/
-		
-		KnotenB neuerKnoten = (KnotenB) element;
-		KnotenB alterKnoten = (KnotenB) retrieve(position);
-		KnotenB vorKnoten   = (KnotenB) retrieve(position-1);
+		KnotenB neuerKnoten = new KnotenB<T>(element);
+		KnotenB alterKnoten = getNode(position);
+		KnotenB vorKnoten   = getNode(position-1);
 		KnotenB nachKnoten  = null;
 
+		//versuche den alten Knoten an gegebener Position zu holen
 		try {
 			nachKnoten = (KnotenB) alterKnoten.getNext();
 		} catch (Exception e) {
 			
 		}
 		
+		//erstes Element
 		if( vorKnoten == null){
 			neuerKnoten.setPrev( null );
 			head = neuerKnoten;
 		}
-
+		
+		//setze Referrenzen um
 		neuerKnoten.setNext( alterKnoten );
 		neuerKnoten.setPrev(vorKnoten);
 		
+		//vorheriger Knoten kann null sein
 		try {
 			vorKnoten.setNext(neuerKnoten);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-
+		//alter Knoten kann ebenfalls null sein
 		try {
 			alterKnoten.setPrev(neuerKnoten);
 		} catch (Exception e) {
@@ -103,7 +99,25 @@ public class ListeB extends Liste {
 	 * @see Aufgabenblatt01.Liste#retrieve(int)
 	 */
 	@Override
-	public Knoten<?> retrieve(int position) {
+	public T retrieve(int position) {
+		return (T) getNode(position).getDaten();
+	}
+	
+	/* (non-Javadoc)
+	 * @see Aufgabenblatt01.Liste#concat(Aufgabenblatt01.Liste)
+	 */
+	@Override
+	public void concat(Liste liste) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	/**
+	 * Helfer Funktion, die den Knoten zur Position liefert.
+	 * @param position
+	 * @return
+	 */
+	private KnotenB getNode(int position) {
 		
 		KnotenB knoten = (KnotenB) head;
 		
@@ -118,29 +132,19 @@ public class ListeB extends Liste {
 		
 		return knoten;
 	}
-
-	/* (non-Javadoc)
-	 * @see Aufgabenblatt01.Liste#concat(Aufgabenblatt01.Liste)
-	 */
-	@Override
-	public void concat(Liste liste) {
-		// TODO Auto-generated method stub
-
-	}
+	
+	
+	
 	
 	public static void main(String[] args) {
 		
-		Liste liste = new ListeB();
-		Knoten k1   = new KnotenB( 1 ); 
-		Knoten k2   = new KnotenB( 2 ); 
-		Knoten k3   = new KnotenB( 3 ); 
-		Knoten k4   = new KnotenB( 4 ); 
+		Liste<Integer> liste = new ListeB<Integer>();
+
+		liste.insert(1, 1);
+		liste.insert(2, 2);
+		liste.insert(3, 3);
 		
-		liste.insert(1, k1);
-		liste.insert(2, k2);
-		liste.insert(3, k3);
-		
-		liste.insert(2, k4);
+		liste.insert(2, 4);
 		
 		System.out.println("finish!");
 	}

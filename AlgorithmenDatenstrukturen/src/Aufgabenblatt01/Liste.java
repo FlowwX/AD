@@ -10,7 +10,7 @@ package Aufgabenblatt01;
  * @author Florian Heuer
  *
  */
-public abstract class Liste {
+public abstract class Liste<T> {
 	
 	/**
 	 * Globaler Zaehler der alle Aktionen/Operationen zu
@@ -24,7 +24,7 @@ public abstract class Liste {
 	 * @param position
 	 * @param element
 	 */
-	public abstract void insert( int position, Knoten<?> element);
+	public abstract void insert( int position, T element);
 	
 	/**
 	 * Löschung eines Elements mit übergebener Position.
@@ -50,11 +50,11 @@ public abstract class Liste {
 	 * @param position
 	 * @return
 	 */
-	public abstract Knoten<?> retrieve( int position );
+	public abstract T retrieve( int position );
 	
 	/**
 	 * Verbindet 2 Listen mit einander.
 	 * @param liste
 	 */
-	public abstract void concat( Liste liste );
+	public abstract void concat( Liste<?> liste );
 }

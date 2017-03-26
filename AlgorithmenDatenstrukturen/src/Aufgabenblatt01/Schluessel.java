@@ -2,10 +2,12 @@ package Aufgabenblatt01;
 
 public class Schluessel {
 	
-	private static int wert = 1000;
+	private static int nummer = 1000;
+	private int wert;
 	
 	public Schluessel() {
-		wert++;
+		nummer++;
+		wert = nummer;
 	}
 
 	public int getWert() {
