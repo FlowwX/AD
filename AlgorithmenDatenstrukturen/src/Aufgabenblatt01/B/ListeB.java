@@ -8,12 +8,14 @@ import Aufgabenblatt01.Liste;
 import Aufgabenblatt01.Schluessel;
 
 /**
+ * Listenimplementierung B
+ * 
  * @author Florian Heuer
  *
  */
 public class ListeB<T> extends Liste<T> {
 
-	private Knoten<T> head;
+	private KnotenB<T> head;
 	
 	private int anzahlElemente = 0;
 	
@@ -28,17 +30,9 @@ public class ListeB<T> extends Liste<T> {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		KnotenB neuerKnoten = new KnotenB<T>(element);
-		KnotenB alterKnoten = getNode(position);
-		KnotenB vorKnoten   = getNode(position-1);
-		KnotenB nachKnoten  = null;
-
-		//versuche den alten Knoten an gegebener Position zu holen
-		try {
-			nachKnoten = (KnotenB) alterKnoten.getNext();
-		} catch (Exception e) {
-			
-		}
+		KnotenB<T> neuerKnoten = new KnotenB<T>(element);
+		KnotenB<T> alterKnoten = getNode(position);
+		KnotenB<T> vorKnoten   = getNode(position-1);
 		
 		//erstes Element
 		if( vorKnoten == null){
@@ -73,8 +67,29 @@ public class ListeB<T> extends Liste<T> {
 	 */
 	@Override
 	public void delete(int position) {
-		// TODO Auto-generated method stub
-
+		
+		//prüfe auf invlide Eingabe für position
+		if(!(position > 0 && position <= anzahlElemente )){
+			throw new IndexOutOfBoundsException();
+		}
+		
+		KnotenB<T> knoten 		= getNode(position);
+		KnotenB<T> vorKnoten	= (KnotenB<T>) knoten.getPrev();
+		KnotenB<T> nachKnoten	= (KnotenB<T>) knoten.getNext();
+		
+		try {
+			vorKnoten.setNext(nachKnoten);
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			nachKnoten.setPrev(vorKnoten);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		anzahlElemente--;
 	}
 
 	/* (non-Javadoc)
@@ -82,8 +97,10 @@ public class ListeB<T> extends Liste<T> {
 	 */
 	@Override
 	public void delete(Schluessel schluessel) {
-		// TODO Auto-generated method stub
-
+		int position = find(schluessel);
+		if(position > 0){
+			delete(position);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -91,8 +108,17 @@ public class ListeB<T> extends Liste<T> {
 	 */
 	@Override
 	public int find(Schluessel schluessel) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		KnotenB<T> knoten 	= head;
+		int position 		= 0;
+		
+		for(int i=1; i <= anzahlElemente; i++ ){
+			if( schluessel.getWert() == knoten.getSchluessel().getWert() ){
+				position = i;
+			}
+		}
+		
+		return position;
 	}
 
 	/* (non-Javadoc)
@@ -108,8 +134,24 @@ public class ListeB<T> extends Liste<T> {
 	 */
 	@Override
 	public void concat(Liste liste) {
-		// TODO Auto-generated method stub
-
+		
+		//finde ende von liste
+		KnotenB<T> letzterKnoten = getNode(anzahlElemente);
+		KnotenB<T> ersterKnoten  = ((ListeB) liste).getHead();
+		
+		
+		try {
+			letzterKnoten.setNext(ersterKnoten);
+		} catch (NullPointerException e) {
+			// leere Liste
+		}
+		
+		try {
+			ersterKnoten.setPrev(letzterKnoten);
+		} catch (NullPointerException e) {
+			// leere Liste
+		}
+		
 	}
 	
 	/**
@@ -117,7 +159,7 @@ public class ListeB<T> extends Liste<T> {
 	 * @param position
 	 * @return
 	 */
-	private KnotenB getNode(int position) {
+	private KnotenB<T> getNode(int position) {
 		
 		KnotenB knoten = (KnotenB) head;
 		
@@ -133,6 +175,10 @@ public class ListeB<T> extends Liste<T> {
 		return knoten;
 	}
 	
+	public KnotenB<T> getHead() {
+		return head;
+	}
+	
 	
 	
 	
@@ -145,6 +191,8 @@ public class ListeB<T> extends Liste<T> {
 		liste.insert(3, 3);
 		
 		liste.insert(2, 4);
+		
+		liste.delete(2);
 		
 		System.out.println("finish!");
 	}
