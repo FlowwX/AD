@@ -6,9 +6,9 @@ import Aufgabenblatt01.Knoten;
  * @author Alexander Mendel
  *
  */
-public class KnotenA extends Knoten<Integer> {
+public class KnotenA<T> extends Knoten<T> {
 
-	public KnotenA(Integer daten) {
+	public KnotenA(T daten) {
 		super(daten);
 	}
 	

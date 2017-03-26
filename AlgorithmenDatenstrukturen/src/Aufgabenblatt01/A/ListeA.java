@@ -1,6 +1,6 @@
+
 package Aufgabenblatt01.A;
 
-import Aufgabenblatt01.Knoten;
 import Aufgabenblatt01.Liste;
 import Aufgabenblatt01.Schluessel;
 
@@ -9,15 +9,26 @@ import Aufgabenblatt01.Schluessel;
  * @author Alexander Mendel
  *
  */
-public class ListeA extends Liste{
+public class ListeA<T> extends Liste<T>{
 
 	private int arraySize = 10;
-	private Knoten<?>[] arrayLst = new Knoten<?>[arraySize];
+	// private KnotenA<?>[] arrayLst = new KnotenA<?>[arraySize]; //Generische arrays koennen nicht erstellt werden 
+	
+	private KnotenA<T>[] arrayLst;
 	
 	private int anzahlElemente;
 	
+	private int anzahlOperationen;
+	
+
+	@SuppressWarnings("unchecked")
+	ListeA() {
+		arrayLst = (KnotenA<T>[]) new Object[arraySize];
+	}
+	
+	
 	@Override
-	public void insert (int position, Knoten<?> element) {
+	public void insert (int position, T element) throws IndexOutOfBoundsException {
 		
 		if ( (position <= 0) || (position > arrayLst.length) || (element==null) ) {
 			throw new IndexOutOfBoundsException();
@@ -28,14 +39,23 @@ public class ListeA extends Liste{
 		}
 		
 		if (arrayLst[position] == null){
-			arrayLst[position] = element;
+			
+			arrayLst[position] = new KnotenA<T>(element);
 			anzahlElemente++;
+			anzahlOperationen++;
+			
+			//Erhoeht sich "anzahlOperationen" bei "anzahlElemente++"?
+			
 		} else {
-			for (int i = (anzahlElemente); i > position; i--) {
+			for (int i = (arraySize); i > position; i--) {
 				arrayLst[i] = arrayLst[i-1];
+				anzahlOperationen++;
+				
 			}
-			arrayLst[position]  = element;
+			arrayLst[position]  = new KnotenA<T>(element);
 			anzahlElemente++;
+			anzahlOperationen++;
+			//Erhoeht sich "anzahlOperationen" bei "anzahlElemente++"?
 		}
 		
 	}
@@ -43,58 +63,107 @@ public class ListeA extends Liste{
 
 
 	@Override
-	public void delete(int position) {
+	public void delete(int position) throws IndexOutOfBoundsException {
 		if ( (position <= 0) || (position > arrayLst.length) ) {
 			throw new IndexOutOfBoundsException();
 		}
-		for (int i = position; i < anzahlElemente; i++) {
+		for (int i = position; i < arraySize; i++) {
 			arrayLst[i] = arrayLst[i+1];
+			anzahlOperationen++;
 		}
 		anzahlElemente--;
-		
+		//Erhoeht sich "anzahlOperationen" bei "anzahlElemente--"?
 	}
+	
 	
 	@Override
 	public void delete(Schluessel schluessel) {
-		// TODO Auto-generated method stub
 		
+		delete(find(schluessel));
+				
 	}
 
 
 
 	@Override
 	public int find(Schluessel schluessel) {
-		// TODO Auto-generated method stub
-		return 0;
+				
+		for (int i = 0; i < arrayLst.length; i++){
+			if (arrayLst[i].getSchluessel() == schluessel) {
+				return i;
+			}
+			anzahlOperationen++;
+		}
+		return -1;
 	}
 
 
-
-
 	@Override
-	public Knoten<?> retrieve(int position) {
-		return arrayLst[position];
-	}
-
-	@Override
-	public void concat(Liste liste) {
-		// TODO Auto-generated method stub
+	public T retrieve(int position) throws IndexOutOfBoundsException {
+		if (position < 0 || position > getSize()){
+			throw new IndexOutOfBoundsException();
+		}
+		anzahlOperationen++;
+		//??
 		
+		return (T) arrayLst[position].getDaten();
 	}
 	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void concat(Liste<?> liste) {
+
+		
+		int newConcatedSize = arrayLst.length + liste.getSize();
+		anzahlOperationen++;
+		
+		KnotenA<T>[] newConcatedArrayLst = (KnotenA<T>[]) new Object[newConcatedSize];
+		anzahlOperationen++;
+		
+		for ( int i = 0; i < arraySize; i++) {
+			newConcatedArrayLst[i] = arrayLst[i];
+			anzahlOperationen++;
+		}
+		for (int j = arraySize; j < newConcatedSize; j++) {
+			newConcatedArrayLst[j] = (KnotenA<T>) liste.retrieve(j);
+			anzahlOperationen++;
+		}
+		
+		arrayLst = newConcatedArrayLst;
+		anzahlOperationen++;
+		
+		arraySize = newConcatedSize;
+		anzahlOperationen++;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
 	public void resizeArray() {
 		
+		
 		int newArraySize = (int) (arraySize*1.5);
-		Knoten<?>[] newArrayLst = new Knoten<?>[newArraySize];
+		anzahlOperationen++;
+		KnotenA<T>[] newArrayLst = (KnotenA<T>[]) new Object[newArraySize];
+		anzahlOperationen++;
 		
 		for( int i = 0; i < arraySize; i++) {
 			newArrayLst[i] = arrayLst[i];
+			anzahlOperationen++;
 		}
 		arrayLst = newArrayLst;
-		arraySize = newArraySize;
+		anzahlOperationen++;
 		
+		arraySize = newArraySize;
+		anzahlOperationen++;
 	}
 	
+	@Override
+	public int getSize() {
+		//erhoeht sich "anzahlOperationen"?
+		return arrayLst.length;
+	}
+
 	public static void main (String [] args) {
 		System.out.println();
 	}
