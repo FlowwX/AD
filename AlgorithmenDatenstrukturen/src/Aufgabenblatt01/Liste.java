@@ -20,26 +20,26 @@ public abstract class Liste<T> {
 	private int statistikZaehler;
 	
 	/**
-	 * Fügt einen Element vom Typ Knoten in die Liste ein.
+	 * Fï¿½gt einen Element vom Typ Knoten in die Liste ein.
 	 * @param position
 	 * @param element
 	 */
 	public abstract void insert( int position, T element);
 	
 	/**
-	 * Löschung eines Elements mit übergebener Position.
+	 * Lï¿½schung eines Elements mit ï¿½bergebener Position.
 	 * @param position
 	 */
 	public abstract void delete( int position );
 	
 	/**
-	 * Löschung eines Elements mit übergebenen Schlüssel.
+	 * Lï¿½schung eines Elements mit ï¿½bergebenen Schlï¿½ssel.
 	 * @param schluessel
 	 */
 	public abstract void delete( Schluessel schluessel );
 	
 	/**
-	 * Suche nach einem Element mit zugehörigem Schluessel.
+	 * Suche nach einem Element mit zugehï¿½rigem Schluessel.
 	 * @param schluessel
 	 * @return
 	 */
@@ -59,5 +59,24 @@ public abstract class Liste<T> {
 	public abstract void concat( Liste<?> liste );
 	
 	public abstract int getSize ();
+	
+	public void fuelleListeString(Liste<String> typ, String s){
+		String[] sarr = s.split(" ");
+		int pos = 1;
+		for (String sub : sarr){
+			typ.insert(pos, sub);
+			pos++;
+		}
+		return;	
+	}
+	
+	public void fuelleListeInt(Liste<Integer> typ, int from, int step, int to){
+		int pos = 1;
+		for (Integer i = from; to > i; i += step ){
+			typ.insert(pos, i);
+			pos++;
+		}
+		return;	
+	}
 	
 }

@@ -21,10 +21,10 @@ public class ListeA<T> extends Liste<T>{
 	private static int anzahlOperationen;
 	
 
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	ListeA() {
-		//arrayLst = (KnotenA<T>[]) new Object[arraySize];
-		arrayLst = new KnotenA<?>[arraySize];
+		arrayLst = (KnotenA<T>[]) new Object[arraySize];
+		//arrayLst = new KnotenA<?>[arraySize];
 	}
 	
 	
