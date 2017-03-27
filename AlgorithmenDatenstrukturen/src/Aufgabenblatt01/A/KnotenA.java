@@ -8,9 +8,11 @@ import Aufgabenblatt01.Knoten;
  */
 public class KnotenA<T> extends Knoten<T> {
 
+
 	public KnotenA(T daten) {
 		super(daten);
 	}
+	
 	
 }
 
