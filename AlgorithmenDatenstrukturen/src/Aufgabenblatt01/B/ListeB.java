@@ -133,7 +133,7 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#concat(Aufgabenblatt01.Liste)
 	 */
 	@Override
-	public void concat(Liste liste) {
+	public void concat(Liste<?> liste) {
 		
 		//finde ende von liste
 		KnotenB<T> letzterKnoten = getNode(anzahlElemente);
@@ -195,6 +195,13 @@ public class ListeB<T> extends Liste<T> {
 		liste.delete(2);
 		
 		System.out.println("finish!");
+	}
+
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
