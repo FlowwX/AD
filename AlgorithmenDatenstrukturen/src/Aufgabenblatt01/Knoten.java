@@ -1,6 +1,6 @@
 package Aufgabenblatt01;
 /**
- * Datenhalter für den Typ Liste.
+ * Datenhalter fï¿½r den Typ Liste.
  * @author Florian Heuer
  *
  */
@@ -14,15 +14,26 @@ public abstract class Knoten<T>{
 	/**
 	 * Eindeutiger Schluessel
 	 */
-	private final Schluessel schluessel;
+	private Schluessel schluessel;
 	
 	public Knoten(T daten) {
 		schluessel = new Schluessel();
 		this.daten = daten;
 	}
+	/*
+	//stopp Element konstrctor
+	public Knoten( Schluessel key) {
+		schluessel = key;
+		this.daten = null;
+	}
+	*/
 
 	public T getDaten() {
 		return daten;
+	}
+	
+	public void setSchluessel(Schluessel schluessel){
+		this.schluessel = schluessel;
 	}
 
 	public Schluessel getSchluessel() {

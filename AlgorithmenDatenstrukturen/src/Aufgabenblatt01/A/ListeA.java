@@ -23,8 +23,8 @@ public class ListeA<T> extends Liste<T>{
 
 	//@SuppressWarnings("unchecked")
 	public ListeA() {
-		arrayLst = (KnotenA<T>[]) new Object[arraySize];
-		//arrayLst = new KnotenA<?>[arraySize];
+		//arrayLst = (KnotenA<T>[]) new Object[arraySize];
+		arrayLst = new KnotenA<?>[arraySize];
 	}
 	
 	

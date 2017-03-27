@@ -5,6 +5,7 @@ package Aufgabenblatt01.Test;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import Aufgabenblatt01.Liste;
@@ -16,16 +17,16 @@ import Aufgabenblatt01.A.ListeA;
  */
 public class ListenTest {
 	
-	Liste<Integer> list1 = 
-			new ListeA<Integer>(); 
-	Liste<Integer> list2 = 
-			new ListeA<Integer>();
-	
-	
 	@Test
 	public void testInsert() {
-		// Normalfall
 		
+		Liste<Integer> l = new ListeA<Integer>();
+		l.insert(1, 3);
+		l.insert(2, 4);
+		l.insert(3, 6);
+		l.insert(4, 7);
+		// Normalfall
+		Assert.assertEquals(4, l.getSize());
 		// Sonderfaelle
 		
 	}
@@ -47,6 +48,11 @@ public class ListenTest {
 	@Test
 	public void testFind() {
 		// Normalfall
+		Liste<Integer> l = new ListeA<Integer>();
+		l.insert(1, 3);
+		l.insert(2, 4);
+		l.insert(3, 6);
+		l.insert(4, 7);
 		
 				// Sonderfaelle
 	}
