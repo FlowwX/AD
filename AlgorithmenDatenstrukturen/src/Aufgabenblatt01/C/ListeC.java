@@ -57,33 +57,57 @@ public class ListeC<T> extends Liste<T> {
 		KnotenC<T> prev = getNode(position-1);
 		
 		prev.setNext(prev.getNext());
+		
+		anzahlElemente--;
 
 	}
 
 	@Override
-	public void delete(Schluessel schluessel) {
-		// TODO Auto-generated method stub
-		// stoppelement
+	public void delete(Schluessel schluessel) throws IllegalArgumentException{
 		
-		int pos = find();
+		if (null == schluessel){
+			throw new IllegalArgumentException();
+		}
+		
+		
+		KnotenC<T> knoten = head.getNext();
+		
+		// alten schlüssel retten (optional)
+		Schluessel oldTailKey = tail.getSchluessel();
+		tail.setSchluessel(schluessel);
+		
+		while( schluessel  != knoten.getNext().getSchluessel()){
+			knoten = knoten.getNext();
+		}
+		
+		// delete this
+		if (knoten.getNext() != tail){
+			knoten.setNext(knoten.getNext().getNext());
+			// gc wird knoten.next loeschen.
+			
+		}
+		tail.setSchluessel(oldTailKey);
+		anzahlElemente--;
+		return;
+		//int pos = find();
 		
 		
 	}
 
 	@Override
-	public int find(Schluessel schluessel) {
+	public int find(Schluessel schluessel) throws IllegalArgumentException{
 		
-		// TODO Auto-generated method stub
+		if (null == schluessel){
+			throw new IllegalArgumentException();
+		}
+		
 		int pos = 1;
-		KnotenC<T> knoten = head;
+		KnotenC<T> knoten = head.getNext();
 		
 		Schluessel oldTailKey = tail.getSchluessel();
 		tail.setSchluessel(schluessel);
 		
-		while()
-		
-		tail = new KnotenC<T>();
-		while (tail.schluessel != knoten.getSchluessel()){
+		while( schluessel  != knoten.getSchluessel()){
 			knoten = knoten.getNext();
 			pos++;
 		}
@@ -91,21 +115,58 @@ public class ListeC<T> extends Liste<T> {
 		if (knoten == tail){
 			pos = -1;
 		}
+		tail.setSchluessel(oldTailKey);
+		
 		return pos;
 	}
 
 	@Override
-	public T retrieve(int position) {
-		// TODO Auto-generated method stub
-		return null;
+	public T retrieve(int position) throws IndexOutOfBoundsException {
+		
+		if (anzahlElemente < (position) || 0 > position ){
+			throw new IndexOutOfBoundsException(); 
+		} 
+		
+		int currentPos = 1;
+		KnotenC<T> knoten = head.getNext();
+		T elem = null;
+		
+		while( currentPos < position){
+			knoten = knoten.getNext();
+			currentPos++;
+		}
+		
+		if (knoten != tail){
+			elem = knoten.getDaten();	
+		}
+		
+		return elem;
 	}
 
 	@Override
-	public void concat(Liste<?> liste) {
-		// TODO Auto-generated method stub
+	public void concat(Liste<T> liste) {
+		
+		if ( liste.getSize() == 0 || liste == null ) {
+			return;
+		}
+		
+		if (liste instanceof ListeC<?>){
+			tail.getNext().getNext().setNext(
+					((ListeC) liste).getNode(1)
+			);
+			
+		} else {
+			for (int pos = 1; liste.getSize() >= pos; pos++){
+				insert(pos + anzahlElemente, liste.retrieve(pos) );
+				
+			}
+			
+		}
+		anzahlElemente += liste.getSize();
+		
+		return;
 
 	}
-
 	@Override
 	public int getSize() {
 		return anzahlElemente;

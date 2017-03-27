@@ -56,7 +56,7 @@ public abstract class Liste<T> {
 	 * Verbindet 2 Listen mit einander.
 	 * @param liste
 	 */
-	public abstract void concat( Liste<?> liste );
+	public abstract void concat( Liste<T> liste );
 	
 	public abstract int getSize ();
 	
@@ -78,5 +78,6 @@ public abstract class Liste<T> {
 		}
 		return;	
 	}
+	
 	
 }

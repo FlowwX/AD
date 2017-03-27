@@ -21,7 +21,7 @@ public class ListeA<T> extends Liste<T>{
 
 	public static int anzahlOperationen;
 	
-	//"Position" im Array fängt bei 1 an, wird im Array aber schon bei 0 gespeichert
+	//"Position" im Array fï¿½ngt bei 1 an, wird im Array aber schon bei 0 gespeichert
 	//@SuppressWarnings("unchecked")
 	public ListeA() {
 		//arrayLst = (KnotenA<T>[]) new Object[arraySize];
@@ -130,7 +130,7 @@ public class ListeA<T> extends Liste<T>{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void concat(Liste<?> liste) {
+	public void concat(Liste<T> liste) {
 
 		int aktuelleAnzahlElemente = this.anzahlElemente;
 		int j = 1;

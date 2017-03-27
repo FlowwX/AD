@@ -25,7 +25,7 @@ public class ListeB<T> extends Liste<T> {
 	@Override
 	public void insert(int position, T element) {
 		
-		//prüfe auf unkorrekte werte
+		//prï¿½fe auf unkorrekte werte
 		if(!(position > 0 && position <= (anzahlElemente+1))){
 			throw new IndexOutOfBoundsException();
 		}
@@ -68,7 +68,7 @@ public class ListeB<T> extends Liste<T> {
 	@Override
 	public void delete(int position) {
 		
-		//prüfe auf invlide Eingabe für position
+		//prï¿½fe auf invlide Eingabe fï¿½r position
 		if(!(position > 0 && position <= anzahlElemente )){
 			throw new IndexOutOfBoundsException();
 		}
@@ -133,7 +133,7 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#concat(Aufgabenblatt01.Liste)
 	 */
 	@Override
-	public void concat(Liste<?> liste) {
+	public void concat(Liste<T> liste) {
 		
 		//finde ende von liste
 		KnotenB<T> letzterKnoten = getNode(anzahlElemente);
