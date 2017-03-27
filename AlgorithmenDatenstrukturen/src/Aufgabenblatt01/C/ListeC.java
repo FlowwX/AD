@@ -14,8 +14,8 @@ public class ListeC<T> extends Liste<T> {
 	private final static int NOT_FOUND = -1; 
 	
 	public ListeC(){
-		head = new KnotenC<T>(null);
-		tail = new KnotenC<T>(null);
+		head = new KnotenC<T>(null, 0);
+		tail = new KnotenC<T>(null, 0);
 		head.setNext(tail);
 		tail.setNext(head);
 	}
@@ -24,7 +24,7 @@ public class ListeC<T> extends Liste<T> {
 	public void insert(int position, T element) 
 			throws IndexOutOfBoundsException, IllegalArgumentException
 	{
-		if (anzahlElemente < (position) || 0 > position ){
+		if ((anzahlElemente+1) < position || 1 > position ){
 			throw new IndexOutOfBoundsException(); 
 		} else if (null == element){
 			throw new IllegalArgumentException();
@@ -33,8 +33,7 @@ public class ListeC<T> extends Liste<T> {
 		
 		KnotenC<T> neuerKnoten = new KnotenC<T>(element);
 		
-		KnotenC<T> prev = getNode( position - 1);
-		
+		KnotenC<T> prev = getNode(position);
 		neuerKnoten.setNext(prev.getNext());
 		prev.setNext(neuerKnoten);
 
@@ -54,7 +53,7 @@ public class ListeC<T> extends Liste<T> {
 			throw new IndexOutOfBoundsException(); 
 		} 
 		
-		KnotenC<T> prev = getNode(position-1);
+		KnotenC<T> prev = getNode(position);
 		
 		prev.setNext(prev.getNext());
 		
@@ -76,7 +75,7 @@ public class ListeC<T> extends Liste<T> {
 		Schluessel oldTailKey = tail.getSchluessel();
 		tail.setSchluessel(schluessel);
 		
-		while( schluessel  != knoten.getNext().getSchluessel()){
+		while( !schluessel.equals(knoten.getNext().getSchluessel())){
 			knoten = knoten.getNext();
 		}
 		
@@ -107,7 +106,9 @@ public class ListeC<T> extends Liste<T> {
 		Schluessel oldTailKey = tail.getSchluessel();
 		tail.setSchluessel(schluessel);
 		
-		while( schluessel  != knoten.getSchluessel()){
+		
+		
+		while(!schluessel.equals(knoten.getSchluessel())){
 			knoten = knoten.getNext();
 			pos++;
 		}
@@ -123,7 +124,7 @@ public class ListeC<T> extends Liste<T> {
 	@Override
 	public T retrieve(int position) throws IndexOutOfBoundsException {
 		
-		if (anzahlElemente < (position) || 0 > position ){
+		if (anzahlElemente < position || 1 > position ){
 			throw new IndexOutOfBoundsException(); 
 		} 
 		
@@ -158,7 +159,6 @@ public class ListeC<T> extends Liste<T> {
 		} else {
 			for (int pos = 1; liste.getSize() >= pos; pos++){
 				insert(pos + anzahlElemente, liste.retrieve(pos) );
-				
 			}
 			
 		}

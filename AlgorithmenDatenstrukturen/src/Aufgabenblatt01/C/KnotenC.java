@@ -11,6 +11,10 @@ public class KnotenC<T> extends Knoten<T> {
 		super(daten);
 	}
 	
+	public KnotenC(T daten, int key) {
+		super(daten, key);
+	}
+	
 	// ------------------------------------- GETTER
 	public KnotenC<T> getNext(){
 		return next;

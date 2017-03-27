@@ -200,8 +200,7 @@ public class ListeB<T> extends Liste<T> {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return anzahlElemente;
 	}
 
 }

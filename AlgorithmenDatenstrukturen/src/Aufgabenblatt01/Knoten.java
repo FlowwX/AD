@@ -20,13 +20,13 @@ public abstract class Knoten<T>{
 		schluessel = new Schluessel();
 		this.daten = daten;
 	}
-	/*
-	//stopp Element konstrctor
-	public Knoten( Schluessel key) {
-		schluessel = key;
-		this.daten = null;
+	
+	//Dummy konstrctor
+	public Knoten( T daten, int key) {
+		schluessel = new Schluessel(key);
+		this.daten = daten;
 	}
-	*/
+	
 
 	public T getDaten() {
 		return daten;
@@ -39,7 +39,6 @@ public abstract class Knoten<T>{
 	public Schluessel getSchluessel() {
 		return schluessel;
 	}
-	
 	
 	
 }

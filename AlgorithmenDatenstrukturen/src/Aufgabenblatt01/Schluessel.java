@@ -6,7 +6,7 @@ public class Schluessel {
 	private int wert;
 	
 	public Schluessel(int wert) {
-		wert = wert;
+		this.wert = wert;
 	}
 	
 	public Schluessel() {
@@ -17,6 +17,12 @@ public class Schluessel {
 	public int getWert() {
 		return wert;
 	}
+	public static void reset(){
+		nummer = 1000;
+	}
 	
+	public boolean equals(Schluessel key){
+		return ((wert - key.getWert()) == 0 );
+	}
 	
 }
