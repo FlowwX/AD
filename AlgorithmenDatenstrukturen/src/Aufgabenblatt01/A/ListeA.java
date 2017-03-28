@@ -30,7 +30,7 @@ public class ListeA<T> extends Liste<T>{
 	@Override
 	public void insert (int position, T element) throws IndexOutOfBoundsException {
 		
-		if ( (position <= 0) || (position > (anzahlElemente+2) ) || (element==null) ) {	//position < 0, position > arrayLst.length
+		if ( (position <= 0) || (position > (anzahlElemente + 1) ) || (element==null) ) {	//position < 0, position > arrayLst.length
 			throw new IndexOutOfBoundsException();
 		}
 		
@@ -40,31 +40,19 @@ public class ListeA<T> extends Liste<T>{
 		}
 		
 		
-		if (arrayLst[position-1] == null){
-			
-			arrayLst[position-1] = new KnotenA<T>(element);
-
-			anzahlElemente++;
-			
+		for (int i = anzahlElemente; i > position; i--) {
+			arrayLst[i-1] = arrayLst[i-2];
+				
 			//AUFWAND INKREMENTIEREN
-			statistikZaehler+=2;
-			
-			
-		} else {
-			for (int i = anzahlElemente; i > position; i--) {
-				arrayLst[i-1] = arrayLst[i-2];
+			statistikZaehler+=1;
 				
-				//AUFWAND INKREMENTIEREN
-				statistikZaehler+=1;
-				
-			}
+		}
 			arrayLst[position-1]  = new KnotenA<T>(element);
 		
 			anzahlElemente++;
 	
 			//AUFWAND INKREMENTIEREN
 			statistikZaehler+=2;
-		}
 		
 	}
 	
@@ -107,10 +95,8 @@ public class ListeA<T> extends Liste<T>{
 		if (find(schluessel) > 0 && find(schluessel) < anzahlElemente) {
 			delete(find(schluessel));
 		} else {
-			System.out.println("Zu loeschendes Element mit Key " + schluessel.getWert() + " ist nicht in Liste enthalten");
-		}
-		
-				
+//			System.out.println("Zu loeschendes Element mit Key " + schluessel.getWert() + " ist nicht in Liste enthalten, findschluessel: "+ find(schluessel));
+		}			
 	}
 
 
@@ -121,19 +107,14 @@ public class ListeA<T> extends Liste<T>{
 		for (int i = 0; i < anzahlElemente; i++){ //alternative: i < arrayLst.length
 			try {
 				if (arrayLst[i].getSchluessel().getWert() == (schluessel.getWert()) ) {
-					
 					return i+1;
 				}
-
 			} catch (NullPointerException e) {
-				
+				//do notting
 			}
-			
-			
 			//AUFWAND INKREMENTIEREN
 			statistikZaehler+=1;
-		} 
-		
+		} 	
 		return -1;
 	}
 
@@ -153,11 +134,9 @@ public class ListeA<T> extends Liste<T>{
 		try {
 			returnWert = (T) arrayLst[(position-1)].getDaten();
 		} catch (NullPointerException e) {
-			
-		}
-		
-		return returnWert;
-		
+			//tdu nix
+		}		
+		return returnWert;	
 	}
 	
 
@@ -188,7 +167,7 @@ public class ListeA<T> extends Liste<T>{
 	public void resizeArray() {
 		
 		
-		int newArraySize = (int) ((arraySize*2));
+		int newArraySize = (int) ((arraySize*1.5));
 		
 		//AUFWAND INKREMENTIEREN
 		statistikZaehler+=1;
