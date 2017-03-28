@@ -20,13 +20,13 @@ import Aufgabenblatt01.C.ListeC;
 public class ListenTest {
 	
 	Liste<Integer> l = 
-	//		new ListeA<Integer>();
-	      new ListeB<Integer>();
+			new ListeA<Integer>();
+	//      new ListeB<Integer>();
 	//      new ListeC<Integer>();
 	
 	Liste<Integer> l2 = 
-			//    new ListeA<Integer>();
-			    new ListeB<Integer>();
+			    new ListeA<Integer>();
+			//    new ListeB<Integer>();
 			//    new ListeC<Integer>();
 	
 	// ------------------------------------------------- INSERT

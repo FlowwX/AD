@@ -43,6 +43,9 @@ public class ListeC<T> extends Liste<T> {
 		}
 		
 		anzahlElemente++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=7;
 		return;
 	}
 
@@ -55,14 +58,17 @@ public class ListeC<T> extends Liste<T> {
 		} 
 		
 		KnotenC<T> prev = getNode(position -1 );
-		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		
 		KnotenC<T> del = prev.getNext();
 		prev.setNext(prev.getNext().getNext());
 		// loeschen des vorherigen
 		del = null;
-		
+	
 		anzahlElemente--;
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=5;
 
 	}
 
@@ -80,8 +86,13 @@ public class ListeC<T> extends Liste<T> {
 		Schluessel oldTailKey = tail.getSchluessel();
 		tail.setSchluessel(schluessel);
 		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
+		
 		while( !schluessel.equals(knoten.getNext().getSchluessel())){
 			knoten = knoten.getNext();
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=2;
 		}
 		
 		// delete this
@@ -90,8 +101,12 @@ public class ListeC<T> extends Liste<T> {
 			// gc wird knoten.next loeschen.
 			
 		}
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=2;
 		tail.setSchluessel(oldTailKey);
 		anzahlElemente--;
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 		return;
 		//int pos = find();
 		
@@ -108,21 +123,27 @@ public class ListeC<T> extends Liste<T> {
 		int pos = 1;
 		KnotenC<T> knoten = head.getNext();
 		
+		// Stopperelement
 		Schluessel oldTailKey = tail.getSchluessel();
 		tail.setSchluessel(schluessel);
 		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=4;
 		
 		
 		while(!schluessel.equals(knoten.getSchluessel())){
 			knoten = knoten.getNext();
 			pos++;
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=3;
 		}
 		
 		if (knoten == tail){
 			pos = -1;
 		}
 		tail.setSchluessel(oldTailKey);
-		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 		return pos;
 	}
 
@@ -136,15 +157,21 @@ public class ListeC<T> extends Liste<T> {
 		int currentPos = 1;
 		KnotenC<T> knoten = head.getNext();
 		T elem = null;
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 		
 		while( currentPos < position){
 			knoten = knoten.getNext();
 			currentPos++;
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=3;
 		}
 		
 		if (knoten != tail){
 			elem = knoten.getDaten();	
 		}
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		
 		return elem;
 	}
@@ -161,15 +188,20 @@ public class ListeC<T> extends Liste<T> {
 			tail.setNext(l.getNode(l.getSize()));
 			tail.getNext().setNext(tail);
 			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=4;
 			
 		} else {
 			for (int pos = 1; liste.getSize() > pos; pos++){
 				insert(pos + anzahlElemente, liste.retrieve(pos) );
+				//AUFWAND INKREMENTIEREN
+				statistikZaehler+=1;
 			}
 			
 		}
 		anzahlElemente += liste.getSize();
-		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		return;
 
 	}
