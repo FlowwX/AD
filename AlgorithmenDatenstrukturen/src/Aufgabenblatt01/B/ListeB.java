@@ -25,24 +25,40 @@ public class ListeB<T> extends Liste<T> {
 	@Override
 	public void insert(int position, T element) {
 		
-		//prüfe auf unkorrekte werte
+		//prï¿½fe auf unkorrekte werte
 		if(!(position > 0 && position <= (anzahlElemente+1))){
 			throw new IndexOutOfBoundsException();
 		}
 		
 		KnotenB<T> neuerKnoten = new KnotenB<T>(element);
 		KnotenB<T> alterKnoten = getNode(position);
-		KnotenB<T> vorKnoten   = getNode(position-1);
+		KnotenB<T> vorKnoten   = null;
+		
+		if( (position-1)> 0){
+			vorKnoten   = getNode(position-1);
+		}
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 		
 		//erstes Element
 		if( vorKnoten == null){
 			neuerKnoten.setPrev( null );
 			head = neuerKnoten;
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=2;
 		}
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler++;
 		
 		//setze Referrenzen um
 		neuerKnoten.setNext( alterKnoten );
 		neuerKnoten.setPrev(vorKnoten);
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=2;
 		
 		//vorheriger Knoten kann null sein
 		try {
@@ -57,8 +73,11 @@ public class ListeB<T> extends Liste<T> {
 		} catch (Exception e) {
 			
 		}
-
+		
 		anzahlElemente++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 		
 	}
 
@@ -68,7 +87,7 @@ public class ListeB<T> extends Liste<T> {
 	@Override
 	public void delete(int position) {
 		
-		//prüfe auf invlide Eingabe für position
+		//prï¿½fe auf invlide Eingabe fï¿½r position
 		if(!(position > 0 && position <= anzahlElemente )){
 			throw new IndexOutOfBoundsException();
 		}
@@ -76,6 +95,9 @@ public class ListeB<T> extends Liste<T> {
 		KnotenB<T> knoten 		= getNode(position);
 		KnotenB<T> vorKnoten	= (KnotenB<T>) knoten.getPrev();
 		KnotenB<T> nachKnoten	= (KnotenB<T>) knoten.getNext();
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 		
 		try {
 			vorKnoten.setNext(nachKnoten);
@@ -90,6 +112,9 @@ public class ListeB<T> extends Liste<T> {
 		}
 		
 		anzahlElemente--;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
 	}
 
 	/* (non-Javadoc)
@@ -101,6 +126,9 @@ public class ListeB<T> extends Liste<T> {
 		if(position > 0){
 			delete(position);
 		}
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=2;
 	}
 
 	/* (non-Javadoc)
@@ -111,11 +139,21 @@ public class ListeB<T> extends Liste<T> {
 		
 		KnotenB<T> knoten 	= head;
 		int position 		= 0;
+		int zaehler 		= 0;
 		
-		for(int i=1; i <= anzahlElemente; i++ ){
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=3;
+		
+		while(knoten != null){
+			zaehler++;
 			if( schluessel.getWert() == knoten.getSchluessel().getWert() ){
-				position = i;
+				position = zaehler;
 			}
+			
+			knoten = (KnotenB<T>) knoten.getNext();
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=2;
 		}
 		
 		return position;
@@ -133,7 +171,7 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#concat(Aufgabenblatt01.Liste)
 	 */
 	@Override
-	public void concat(Liste<?> liste) {
+	public void concat(Liste<T> liste) {
 		
 		//finde ende von liste
 		KnotenB<T> letzterKnoten = getNode(anzahlElemente);
@@ -161,11 +199,21 @@ public class ListeB<T> extends Liste<T> {
 	 */
 	private KnotenB<T> getNode(int position) {
 		
-		KnotenB knoten = (KnotenB) head;
+		if(position<=0){
+			throw new IllegalArgumentException("Keine 0 erlaubt");
+		}
+		
+		KnotenB<T> knoten = head;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler++;
 		
 		try {
 			for(int i=1; i<position; i++){
-				knoten = (KnotenB) knoten.getNext();
+				knoten = (KnotenB<T>) knoten.getNext();
+				
+				//AUFWAND INKREMENTIEREN
+				statistikZaehler++;
 			}
 		} catch (Exception e) {
 			knoten = null;
@@ -194,14 +242,23 @@ public class ListeB<T> extends Liste<T> {
 		
 		liste.delete(2);
 		
+		liste.insert(1, 4);
+		liste.insert(1, 5);
+		liste.insert(1, 6);
+		liste.insert(1, 7);
+		liste.insert(1, 8);
+		liste.insert(1, 9);
+		liste.insert(1, 10);
+		
+		liste.find(new Schluessel(1001));
+		
 		System.out.println("finish!");
 	}
 
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return anzahlElemente;
 	}
 
 }

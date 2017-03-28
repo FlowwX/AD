@@ -21,7 +21,7 @@ public class ListeA<T> extends Liste<T>{
 
 	public static int anzahlOperationen;
 	
-	//"Position" im Array fängt bei 1 an, wird im Array aber schon bei 0 gespeichert
+	//"Position" im Array fï¿½ngt bei 1 an, wird im Array aber schon bei 0 gespeichert
 	//@SuppressWarnings("unchecked")
 	public ListeA() {
 		//arrayLst = (KnotenA<T>[]) new Object[arraySize];
@@ -41,7 +41,6 @@ public class ListeA<T> extends Liste<T>{
 			resizeArray();
 		}
 		
-		KnotenA<?>[] newArrayLst = new KnotenA<?>[arraySize];
 		
 		if (arrayLst[position-1] == null){
 			
@@ -52,21 +51,16 @@ public class ListeA<T> extends Liste<T>{
 			
 			
 		} else {
-			for (int i = 0; i < position-1; i++) {
-				newArrayLst[i] = arrayLst[i];
-			}
-			
 			for (int i = anzahlElemente; i > position; i--) {
-				newArrayLst[i-1] = arrayLst[i-2];
+				arrayLst[i-1] = arrayLst[i-2];
 				anzahlOperationen++;	//Messcounter
 				
 			}
-			newArrayLst[position-1]  = new KnotenA<T>(element);
+			arrayLst[position-1]  = new KnotenA<T>(element);
 			anzahlOperationen++;		//Messcounter
 			anzahlElemente++;
 			anzahlOperationen++;		//Messcounter
 			
-			arrayLst = newArrayLst;
 		}
 		
 	}
@@ -136,35 +130,15 @@ public class ListeA<T> extends Liste<T>{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void concat(Liste<?> liste) {
+	public void concat(Liste<T> liste) {
 
-		
-		int newConcatedSize = getSize() + liste.getSize();
-		anzahlOperationen++;
-		
-		//KnotenA<T>[] newConcatedArrayLst = (KnotenA<T>[]) new Object[newConcatedSize];
-		KnotenA<?>[] newConcatedArrayLst = new KnotenA<?>[newConcatedSize];
-		anzahlOperationen++;
-		
-		for ( int i = 0; i < getSize(); i++) {
-			newConcatedArrayLst[i] = arrayLst[i];
+		int aktuelleAnzahlElemente = this.anzahlElemente;
+		int j = 1;
+		for (int i = aktuelleAnzahlElemente; i < (aktuelleAnzahlElemente + liste.getSize()); i++) {	
+			this.insert(i, ( (T) liste.retrieve(j) ) );
+			j++;
 			anzahlOperationen++;
 		}
-		for (int j = getSize(); j < newConcatedSize; j++) {
-			int i = 1;
-			//newConcatedArrayLst[j] = (KnotenA<?>) liste.retrieve(j);
-			newConcatedArrayLst[j] = new KnotenA<T> ((T) liste.retrieve(i));
-			i++;
-			anzahlOperationen++;
-			
-		}
-		
-		arraySize = newConcatedSize;
-		anzahlOperationen++;
-		
-		arrayLst = newConcatedArrayLst;
-		anzahlOperationen++;
-		
 	}
 	
 	
@@ -233,6 +207,18 @@ public class ListeA<T> extends Liste<T>{
 		testListe2.insert(7, 52);
 		testListe2.insert(8, 52);
 		testListe2.insert(9, 52);
+		
+		Liste<Integer> testListe3 = new ListeA<Integer>();
+		testListe3.insert(1, 32);
+		testListe3.insert(2, 33);
+		testListe3.insert(3, 34);
+		testListe3.insert(4, 35);
+		testListe3.insert(5, 36);
+		testListe3.insert(6, 37);
+		testListe3.insert(7, 38);
+		testListe3.insert(8, 39);
+		testListe3.insert(9, 40);
+		
 		System.out.println(testListe.getSize());
 		testListe.insert(1, 2);
 		System.out.println(testListe2.getSize());
@@ -242,8 +228,9 @@ public class ListeA<T> extends Liste<T>{
 		System.out.println(testListe2.retrieve(4));
 		System.out.println(getAnzahlOperationen());
 		testListe.concat(testListe2);
+		testListe.concat(testListe3);
 		
-		System.out.println(testListe.getSize());
+		System.out.println("Liste1 size nach concat: " + testListe.getSize());
 		System.out.println(testListe2.getSize());
 		testListe.delete(10);
 		
