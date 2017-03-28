@@ -21,7 +21,6 @@ public class Schluessel {
 		nummer = 1000;
 	}
 	
-
 	public boolean equals(Schluessel key){
 		return ((wert - key.getWert()) == 0 );
 	}
