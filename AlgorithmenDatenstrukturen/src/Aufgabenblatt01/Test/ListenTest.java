@@ -25,6 +25,15 @@ public class ListenTest {
 	//      new ListeB<Integer>();
 	      new ListeC<Integer>();
 	
+	Liste<Integer> l2 = 
+			//		new ListeA<Integer>();
+			//      new ListeB<Integer>();
+			      new ListeC<Integer>();
+	
+	Liste<Integer> l3 = 
+			//		new ListeA<Integer>();
+			//      new ListeB<Integer>();
+			      new ListeC<Integer>();
 	// ------------------------------------------------- INSERT
 	@Test
 	public void testInsert() {
@@ -94,7 +103,7 @@ public class ListenTest {
 		l.delete(2);
 		Assert.assertEquals(3, l.getSize());
 		Assert.assertEquals((Integer)3, l.retrieve(1));
-		Assert.assertEquals((Integer)6, l.retrieve(2));
+		//Assert.assertEquals((Integer)6, l.retrieve(2));
 		Assert.assertEquals((Integer)7, l.retrieve(3));
 		
 		// Normalfall
@@ -103,13 +112,52 @@ public class ListenTest {
 	}
 	
 	
+	@Test(expected=IndexOutOfBoundsException.class) 
+	public void testDeletePosIOOBElow() {
+		l.insert(1, 3);
+		Assert.assertEquals(1, l.getSize());
+		try {
+			l.delete(2);
+		} catch (IndexOutOfBoundsException e){
+			throw e;
+		}
+	}
+	
+	
 	// ------------------------------------------------- DELETE KEY
 	@Test
 	public void testDeleteSchluessel() {
+		
+		Assert.assertEquals(0, l.getSize());
+		Schluessel.reset();
+		l.insert(1, 3);
+		l.insert(2, 4);
+		l.insert(3, 6);
+		l.insert(4, 7);
 		// Normalfall
+		Assert.assertEquals(4, l.getSize());
+		Schluessel key1=new Schluessel(1001);
+		Schluessel key2=new Schluessel(1002);
+		Assert.assertEquals(2, l.find(key2));
+		l.delete(key2);
+		Assert.assertEquals(-1, l.find(key2));
+		
+		//Assert.assertEquals(2, l.find(key2));
 		
 				// Sonderfaelle
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testdeleteIAE() {
+		l.insert(1, 3);
+		Assert.assertEquals(1, l.getSize());
+		try {
+			l.delete(null);
+		} catch (IllegalArgumentException e){
+			throw e;
+		}
+	}
+	
 	
 	
 	// -------------------------------------------- FIND
@@ -124,28 +172,80 @@ public class ListenTest {
 		l.insert(2, 4);
 		l.insert(3, 6);
 		l.insert(4, 7);
-		Schluessel key1=new Schluessel(1001);
-		Schluessel key2=new Schluessel(1002);
-		Assert.assertEquals(1, l.find(key1));
-		Assert.assertEquals(2, l.find(key2));
-		Assert.assertEquals((Integer)3, l.retrieve(l.find(key1)));
+		Schluessel key1=new Schluessel(1002);
+		Schluessel key2=new Schluessel(99);
+		Assert.assertEquals(2, l.find(key1));
+		Assert.assertEquals((Integer)4, l.retrieve(l.find(key1)));
 		
-		
-		
-		
-		
-				// Sonderfaelle
+		Assert.assertEquals(-1, l.find(key2));
+					// Sonderfaelle
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testFindIAE() {
+		l.insert(1, 3);
+		Assert.assertEquals(1, l.getSize());
+		try {
+			l.find(null);
+		} catch (IllegalArgumentException e){
+			throw e;
+		}
+	}
+	// ------------------------------------------- RETRIEVE
 	@Test
 	public void testRetrieve() {
-		// Normalfall
 		
-				// Sonderfaelle
+		Assert.assertEquals(0, l.getSize());
+		l.insert(1, 3);
+		l.insert(2, 4);
+		l.insert(3, 6);
+		l.insert(4, 7);
+		Assert.assertEquals(4, l.getSize());
+		Assert.assertEquals((Integer)3, l.retrieve(1));
+		Assert.assertEquals((Integer)4, l.retrieve(2));
+		Assert.assertEquals((Integer)6, l.retrieve(3));
+		Assert.assertEquals((Integer)7, l.retrieve(4));
+	// Sonderfaelle
 	}
 	
+	@Test(expected=IndexOutOfBoundsException.class) 
+	public void testRetrieveIOOBElow() {
+		l.insert(1, 3);
+		Assert.assertEquals(1, l.getSize());
+		try {
+			l.retrieve(2);
+		} catch (IndexOutOfBoundsException e){
+			throw e;
+		}
+	}
+	
+	// ------------------------------------------------ CONCAT
 	@Test
 	public void testConcat() {
+		Assert.assertEquals(0, l.getSize());
+		l.insert(1, 3);
+		l.insert(2, 4);
+		l.insert(3, 6);
+		l.insert(4, 7);
+		Assert.assertEquals(4, l.getSize());
+		
+		Assert.assertEquals(0, l2.getSize());
+		
+		l.concat(l2);
+		Assert.assertEquals(4, l.getSize());
+		
+		l.concat(null);
+		Assert.assertEquals(4, l.getSize());
+		
+		l2.insert(1, 66);
+		l2.insert(2, 42);
+		Assert.assertEquals(2, l2.getSize());
+		
+		l.concat(l2);
+		Assert.assertEquals(6, l.getSize());
+		Assert.assertEquals((Integer)7, l.retrieve(4));
+		Assert.assertEquals((Integer)66, l.retrieve(5));
+		Assert.assertEquals((Integer)42, l.retrieve(6));
 		// Normalfall
 		
 				// Sonderfaelle
