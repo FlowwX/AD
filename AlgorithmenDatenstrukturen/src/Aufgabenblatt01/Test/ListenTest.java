@@ -3,7 +3,6 @@
  */
 package Aufgabenblatt01.Test;
 
-import static org.junit.Assert.*;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,18 +21,14 @@ public class ListenTest {
 	
 	Liste<Integer> l = 
 	//		new ListeA<Integer>();
-	//      new ListeB<Integer>();
-	      new ListeC<Integer>();
+	      new ListeB<Integer>();
+	//      new ListeC<Integer>();
 	
 	Liste<Integer> l2 = 
-			//		new ListeA<Integer>();
-			//      new ListeB<Integer>();
-			      new ListeC<Integer>();
+			//    new ListeA<Integer>();
+			    new ListeB<Integer>();
+			//    new ListeC<Integer>();
 	
-	Liste<Integer> l3 = 
-			//		new ListeA<Integer>();
-			//      new ListeB<Integer>();
-			      new ListeC<Integer>();
 	// ------------------------------------------------- INSERT
 	@Test
 	public void testInsert() {
@@ -103,7 +98,7 @@ public class ListenTest {
 		l.delete(2);
 		Assert.assertEquals(3, l.getSize());
 		Assert.assertEquals((Integer)3, l.retrieve(1));
-		//Assert.assertEquals((Integer)6, l.retrieve(2));
+		Assert.assertEquals((Integer)6, l.retrieve(2));
 		Assert.assertEquals((Integer)7, l.retrieve(3));
 		
 		// Normalfall
@@ -177,6 +172,7 @@ public class ListenTest {
 		Assert.assertEquals(2, l.find(key1));
 		Assert.assertEquals((Integer)4, l.retrieve(l.find(key1)));
 		
+		// not in scope -> not Found -> -1
 		Assert.assertEquals(-1, l.find(key2));
 					// Sonderfaelle
 	}
@@ -233,6 +229,7 @@ public class ListenTest {
 		
 		l.concat(l2);
 		Assert.assertEquals(4, l.getSize());
+		
 		
 		l.concat(null);
 		Assert.assertEquals(4, l.getSize());

@@ -24,16 +24,17 @@ public class ListeC<T> extends Liste<T> {
 	public void insert(int position, T element) 
 			throws IndexOutOfBoundsException, IllegalArgumentException
 	{
+		// EXCEPTION 
 		if ((anzahlElemente+1) < position || 1 > position ){
 			throw new IndexOutOfBoundsException(); 
 		} else if (null == element){
 			throw new IllegalArgumentException();
 		}
 		
-		
+		// LOGIC
 		KnotenC<T> neuerKnoten = new KnotenC<T>(element);
-		
-		KnotenC<T> prev = getNode(position);
+		// antizipative gedoenst
+		KnotenC<T> prev = getNode( position - 1 );
 		neuerKnoten.setNext(prev.getNext());
 		prev.setNext(neuerKnoten);
 
@@ -53,9 +54,13 @@ public class ListeC<T> extends Liste<T> {
 			throw new IndexOutOfBoundsException(); 
 		} 
 		
-		KnotenC<T> prev = getNode(position);
+		KnotenC<T> prev = getNode(position -1 );
 		
-		prev.setNext(prev.getNext());
+		
+		KnotenC<T> del = prev.getNext();
+		prev.setNext(prev.getNext().getNext());
+		// loeschen des vorherigen
+		del = null;
 		
 		anzahlElemente--;
 
@@ -147,17 +152,18 @@ public class ListeC<T> extends Liste<T> {
 	@Override
 	public void concat(Liste<T> liste) {
 		
-		if ( liste.getSize() == 0 || liste == null ) {
-			return;
-		}
+		if (liste == null ) return ;
+		if ( liste.getSize() == 0) return;
 		
 		if (liste instanceof ListeC<?>){
-			tail.getNext().getNext().setNext(
-					((ListeC) liste).getNode(1)
-			);
+			ListeC<T> l = (ListeC<T>) liste;
+			tail.getNext().setNext(l.getNode(1));
+			tail.setNext(l.getNode(l.getSize()));
+			tail.getNext().setNext(tail);
+			
 			
 		} else {
-			for (int pos = 1; liste.getSize() >= pos; pos++){
+			for (int pos = 1; liste.getSize() > pos; pos++){
 				insert(pos + anzahlElemente, liste.retrieve(pos) );
 			}
 			
@@ -172,17 +178,46 @@ public class ListeC<T> extends Liste<T> {
 		return anzahlElemente;
 	}
 	
-	private KnotenC<T> getNode(int position) {
+	public KnotenC<T> getNode(int position) {
+		// LOGIK
+		KnotenC<T> knoten = head; 
 		
-		KnotenC<T> knoten = head;
-		
-		knoten = head;	
-		for(int i=1; i<position; i++)
+		for(int i=0; i<position; i++)
 		{
 			knoten = knoten.getNext();
 		}
 		
 		return knoten;
 	}
+	
+	
+	// minor Testing
+	public static void main (String [] args) {
+	
+		System.out.println("peter");
+		
+		ListeC<Integer> l = 
+		//		new ListeA<Integer>();
+		//      new ListeB<Integer>();
+		      new ListeC<Integer>();
+		
+		l.head.setNext(new KnotenC<Integer>(1));
+		l.head.getNext().setNext(new KnotenC<Integer>(2));
+		l.head.getNext().getNext().setNext(new KnotenC<Integer>(3));
+		
+		System.out.println(l.head.getNext().getDaten());
+		
+		System.out.println("" + l.getNode(1).getDaten()
+				+ " " + l.getNode(2).getDaten()
+				+ " " + l.getNode(3).getDaten());
+		
+		if (l.getNode(0) == l.head ){
+			System.out.println(" head is right ");
+		}
+		
+		
+		
+	}
+
 
 }
