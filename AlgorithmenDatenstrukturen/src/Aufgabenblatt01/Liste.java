@@ -17,7 +17,7 @@ public abstract class Liste<T> {
 	 * Statistikzwecken erfasst.
 	 *  
 	 */
-	private int statistikZaehler;
+	public long statistikZaehler;
 	
 	/**
 	 * F�gt einen Element vom Typ Knoten in die Liste ein.
@@ -60,24 +60,7 @@ public abstract class Liste<T> {
 	
 	public abstract int getSize ();
 	
-	public void fuelleListeString(Liste<String> typ, String s){
-		String[] sarr = s.split(" ");
-		int pos = 1;
-		for (String sub : sarr){
-			typ.insert(pos, sub);
-			pos++;
-		}
-		return;	
-	}
-	
-	public void fuelleListeInt(Liste<Integer> typ, int from, int step, int to){
-		int pos = 1;
-		for (Integer i = from; to > i; i += step ){
-			typ.insert(pos, i);
-			pos++;
-		}
-		return;	
-	}
+
 	
 	
 }
