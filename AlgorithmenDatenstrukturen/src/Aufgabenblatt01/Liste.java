@@ -17,7 +17,7 @@ public abstract class Liste<T> {
 	 * Statistikzwecken erfasst.
 	 *  
 	 */
-	public int statistikZaehler;
+	public long statistikZaehler;
 	
 	/**
 	 * F�gt einen Element vom Typ Knoten in die Liste ein.

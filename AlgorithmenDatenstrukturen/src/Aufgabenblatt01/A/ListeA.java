@@ -18,8 +18,6 @@ public class ListeA<T> extends Liste<T>{
 	
 	private int anzahlElemente;
 	
-
-	public static int anzahlOperationen;
 	
 	//"Position" im Array f�ngt bei 1 an, wird im Array aber schon bei 0 gespeichert
 	//@SuppressWarnings("unchecked")
@@ -45,22 +43,27 @@ public class ListeA<T> extends Liste<T>{
 		if (arrayLst[position-1] == null){
 			
 			arrayLst[position-1] = new KnotenA<T>(element);
-			anzahlOperationen++; 		//Messcounter
+
 			anzahlElemente++;
-			anzahlOperationen++; 		//Messcounter
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=2;
 			
 			
 		} else {
 			for (int i = anzahlElemente; i > position; i--) {
 				arrayLst[i-1] = arrayLst[i-2];
-				anzahlOperationen++;	//Messcounter
+				
+				//AUFWAND INKREMENTIEREN
+				statistikZaehler+=1;
 				
 			}
 			arrayLst[position-1]  = new KnotenA<T>(element);
-			anzahlOperationen++;		//Messcounter
+		
 			anzahlElemente++;
-			anzahlOperationen++;		//Messcounter
-			
+	
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=2;
 		}
 		
 	}
@@ -76,14 +79,20 @@ public class ListeA<T> extends Liste<T>{
 		
 		for (int i = 0; i < position; i++) {	
 			tempArrayLst[i] = arrayLst[i];
-			anzahlOperationen++;
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=1;
 		}
 		for (int i = (position+1); i < arraySize; i++) {	
 			tempArrayLst[i-1] = arrayLst[i];
-			anzahlOperationen++;
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=1;
 		}
 		arrayLst = tempArrayLst;
-		anzahlOperationen++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		
 		
 		anzahlElemente--;
@@ -109,7 +118,9 @@ public class ListeA<T> extends Liste<T>{
 			if (arrayLst[i].getSchluessel().equals(schluessel) ) {
 				return i+1;
 			}
-			anzahlOperationen++;
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=1;
 		}
 		return -1;
 	}
@@ -121,7 +132,9 @@ public class ListeA<T> extends Liste<T>{
 		if (position <= 0 || position > getSize() ){ //alternative: > getSize()
 			throw new IndexOutOfBoundsException();
 		}
-		anzahlOperationen++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		//??
 		
 		return (T) arrayLst[position-1].getDaten();
@@ -137,7 +150,9 @@ public class ListeA<T> extends Liste<T>{
 		for (int i = aktuelleAnzahlElemente; i < (aktuelleAnzahlElemente + liste.getSize()); i++) {	
 			this.insert(i, ( (T) liste.retrieve(j) ) );
 			j++;
-			anzahlOperationen++;
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=1;
 		}
 	}
 	
@@ -146,30 +161,37 @@ public class ListeA<T> extends Liste<T>{
 		
 		
 		int newArraySize = (int) (arraySize*1.5);
-		anzahlOperationen++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
+
 		//KnotenA<T>[] newArrayLst = (KnotenA<T>[]) new Object[newArraySize];
 		KnotenA<?>[] newArrayLst = new KnotenA<?>[newArraySize];
-		anzahlOperationen++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		
 		for( int i = 0; i < anzahlElemente; i++) {
 			newArrayLst[i] = arrayLst[i];
-			anzahlOperationen++;
+			
+			//AUFWAND INKREMENTIEREN
+			statistikZaehler+=1;
 		}
 		arrayLst = newArrayLst;
-		anzahlOperationen++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 		
 		arraySize = newArraySize;
-		anzahlOperationen++;
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=1;
 	}
 	
 	@Override
 	public int getSize() {
 		//erhoeht sich "anzahlOperationen"?
 		return anzahlElemente;
-	}
-
-	public static int getAnzahlOperationen() {
-		return anzahlOperationen;
 	}
 
 	public static void main (String [] args) {
@@ -226,7 +248,7 @@ public class ListeA<T> extends Liste<T>{
 		System.out.println(testListe2.retrieve(2));
 		System.out.println(testListe2.retrieve(3));
 		System.out.println(testListe2.retrieve(4));
-		System.out.println(getAnzahlOperationen());
+		
 		testListe.concat(testListe2);
 		testListe.concat(testListe3);
 		
@@ -236,7 +258,7 @@ public class ListeA<T> extends Liste<T>{
 		
 		//why testListe concat no workyworky, size dos not change?
 		
-		System.out.println(getAnzahlOperationen());
+		
 		
 	}
 
