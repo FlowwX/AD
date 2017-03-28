@@ -35,7 +35,7 @@ public class ListeA<T> extends Liste<T>{
 		}
 		
 		
-		if (anzahlElemente == (arraySize)) {
+		if (anzahlElemente == (this.arraySize)) {
 			resizeArray();
 		}
 		
@@ -104,31 +104,43 @@ public class ListeA<T> extends Liste<T>{
 	
 	@Override
 	public void delete(Schluessel schluessel) throws IndexOutOfBoundsException {
+		if (find(schluessel) > 0 && find(schluessel) < anzahlElemente) {
+			delete(find(schluessel));
+		} else {
+			System.out.println("Zu loeschendes Element mit Key " + schluessel.getWert() + " ist nicht in Liste enthalten");
+		}
 		
-		delete(find(schluessel));
 				
 	}
 
 
 
 	@Override
-	public int find(Schluessel schluessel) {
-				
+	public int find(Schluessel schluessel) throws NullPointerException {
+
 		for (int i = 0; i < anzahlElemente; i++){ //alternative: i < arrayLst.length
-			if (arrayLst[i].getSchluessel().equals(schluessel) ) {
-				return i+1;
+			try {
+				if (arrayLst[i].getSchluessel().getWert() == (schluessel.getWert()) ) {
+					
+					return i+1;
+				}
+
+			} catch (NullPointerException e) {
+				
 			}
+			
 			
 			//AUFWAND INKREMENTIEREN
 			statistikZaehler+=1;
-		}
+		} 
+		
 		return -1;
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public T retrieve(int position) throws IndexOutOfBoundsException {
+	public T retrieve(int position) throws IndexOutOfBoundsException, NullPointerException {
 		if (position <= 0 || position > getSize() ){ //alternative: > getSize()
 			throw new IndexOutOfBoundsException();
 		}
@@ -137,30 +149,46 @@ public class ListeA<T> extends Liste<T>{
 		statistikZaehler+=1;
 		//??
 		
-		return (T) arrayLst[position-1].getDaten();
+		T returnWert = null;
+		try {
+			returnWert = (T) arrayLst[(position-1)].getDaten();
+		} catch (NullPointerException e) {
+			
+		}
+		
+		return returnWert;
+		
 	}
 	
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void concat(Liste<T> liste) {
 
 		int aktuelleAnzahlElemente = this.anzahlElemente;
 		int j = 1;
-		for (int i = aktuelleAnzahlElemente; i < (aktuelleAnzahlElemente + liste.getSize()); i++) {	
-			this.insert(i, ( (T) liste.retrieve(j) ) );
+		for (int i = aktuelleAnzahlElemente; i < ( (aktuelleAnzahlElemente + ( liste.getSize()) )) ; i++) {	
+			
+			try {
+				this.insert(i, ( liste.retrieve(j) ) );
+				
+//				System.out.println("Insert an Pos: " +  i + "\n Element: " + liste.retrieve(j));
+				
+			} catch (IndexOutOfBoundsException e) {
+				
+			}
 			j++;
 			
 			//AUFWAND INKREMENTIEREN
 			statistikZaehler+=1;
-		}
+		}	
+		
 	}
 	
 	
 	public void resizeArray() {
 		
 		
-		int newArraySize = (int) (arraySize*1.5);
+		int newArraySize = (int) ((arraySize*2));
 		
 		//AUFWAND INKREMENTIEREN
 		statistikZaehler+=1;
@@ -212,6 +240,9 @@ public class ListeA<T> extends Liste<T>{
 		testListe.insert(13, 52);
 		testListe.insert(14, 52);
 		testListe.insert(5, 52);
+		System.out.println("find: \n");
+		
+		System.out.println(testListe.find(new Schluessel(1008)) );
 		System.out.println(testListe.retrieve(1));
 		testListe.delete(4);
 		testListe.delete(1);
@@ -223,12 +254,12 @@ public class ListeA<T> extends Liste<T>{
 		testListe2.insert(1, 42);
 		testListe2.insert(2, 42);
 		testListe2.insert(3, 42);
-		testListe2.insert(4, 52);
-		testListe2.insert(5, 52);
-		testListe2.insert(6, 52);
-		testListe2.insert(7, 52);
-		testListe2.insert(8, 52);
-		testListe2.insert(9, 52);
+		testListe2.insert(4, 452);
+		testListe2.insert(5, 552);
+		testListe2.insert(6, 652);
+		testListe2.insert(7, 752);
+		testListe2.insert(8, 852);
+		testListe2.insert(9, 952);
 		
 		Liste<Integer> testListe3 = new ListeA<Integer>();
 		testListe3.insert(1, 32);
@@ -255,6 +286,8 @@ public class ListeA<T> extends Liste<T>{
 		System.out.println("Liste1 size nach concat: " + testListe.getSize());
 		System.out.println(testListe2.getSize());
 		testListe.delete(10);
+		
+		
 		
 		//why testListe concat no workyworky, size dos not change?
 		
