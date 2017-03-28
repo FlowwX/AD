@@ -72,6 +72,54 @@ public class Messung {
 			System.out.println("Delete(key)(K="+k+"): " + liste.statistikZaehler);
 		}
 
+		//find
+		for (int k = 1; k <= K_MAX; k++) {
+			Liste<Integer> liste = new ListeB<Integer>();
+			
+			Messung.fuelleListe(liste, k);
+			liste.statistikZaehler = 0;
+			
+			//finde zufällige Einträge
+			for(int i=0; i<Math.pow(10, k); i++){
+				int wert = (int) (1001 + Math.random() * Math.pow(10, k) );
+				
+				liste.find( new Schluessel(wert) );
+			}
+			
+			System.out.println("Find(K="+k+"): " + liste.statistikZaehler);
+		}
+		
+		//retrieve
+		for (int k = 1; k <= K_MAX; k++) {
+			Liste<Integer> liste = new ListeB<Integer>();
+			
+			Messung.fuelleListe(liste, k);
+			liste.statistikZaehler = 0;
+			
+			//hole zufällige Einträge
+			for(int i=0; i<Math.pow(10, k); i++){
+				int pos = (int) (1 + Math.random() * Math.pow(10, k) );
+				
+				liste.retrieve(pos);
+			}
+			
+			System.out.println("Retrieve(K="+k+"): " + liste.statistikZaehler);
+		}
+		
+		//concat
+		for (int k = 1; k <= K_MAX; k++) {
+			Liste<Integer> liste  = new ListeB<Integer>();
+			Liste<Integer> liste2 = new ListeB<Integer>();
+			
+			Messung.fuelleListe(liste, k);
+			Messung.fuelleListe(liste2, 2); //100 Elemente
+			liste.statistikZaehler = 0;
+			
+			//verbinde Liste
+			liste.concat(liste2);
+			
+			System.out.println("Concat(K="+k+"): " + liste.statistikZaehler);
+		}
 	}
 
 }

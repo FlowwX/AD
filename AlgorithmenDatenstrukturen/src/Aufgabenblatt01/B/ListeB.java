@@ -177,6 +177,8 @@ public class ListeB<T> extends Liste<T> {
 		KnotenB<T> letzterKnoten = getNode(anzahlElemente);
 		KnotenB<T> ersterKnoten  = ((ListeB) liste).getHead();
 		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=2;
 		
 		try {
 			letzterKnoten.setNext(ersterKnoten);
@@ -189,6 +191,9 @@ public class ListeB<T> extends Liste<T> {
 		} catch (NullPointerException e) {
 			// leere Liste
 		}
+		
+		//AUFWAND INKREMENTIEREN
+		statistikZaehler+=2;
 		
 	}
 	
