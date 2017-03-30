@@ -85,7 +85,7 @@ public class PrimzahlSuche {
 			feld[i] = true;
 		}
 		
-		for ( int i = 2; i < Math.sqrt(n); i++){
+		for ( int i = 2; i < n; i++){
 			
 			//AUFWAND INKREMENTIEREN
 			zaehlerSchnell++;
@@ -175,7 +175,7 @@ public class PrimzahlSuche {
 			System.out.println("Sieb Suche: " + PrimzahlSuche.zaehlerSieb);
 			
 			for(int i=2; i<n; i++){
-				PrimzahlSuche.einzeln( n );
+				PrimzahlSuche.einzeln( i );
 			}
 			System.out.println("Einzelne Suche: " + PrimzahlSuche.zaehlerEinzeln + "\n");
 		}
