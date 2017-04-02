@@ -12,7 +12,9 @@ public class KnotenA<T> extends Knoten<T> {
 	public KnotenA(T daten) {
 		super(daten);
 	}
-	
+	public KnotenA(T daten, int key) {
+		super(daten, key);
+	}
 	
 }
 

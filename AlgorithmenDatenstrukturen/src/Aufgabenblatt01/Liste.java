@@ -24,33 +24,38 @@ public abstract class Liste<T> {
 	 * @param position
 	 * @param element
 	 */
-	public abstract void insert( int position, T element);
+	public abstract void insert( int position, T element)
+			throws IndexOutOfBoundsException, IllegalArgumentException;
 	
 	/**
 	 * L�schung eines Elements mit �bergebener Position.
 	 * @param position
 	 */
-	public abstract void delete( int position );
+	public abstract void delete( int position )
+			throws IndexOutOfBoundsException;
 	
 	/**
 	 * L�schung eines Elements mit �bergebenen Schl�ssel.
 	 * @param schluessel
 	 */
-	public abstract void delete( Schluessel schluessel );
+	public abstract void delete( Schluessel schluessel )
+			throws IllegalArgumentException;
 	
 	/**
 	 * Suche nach einem Element mit zugeh�rigem Schluessel.
 	 * @param schluessel
 	 * @return
 	 */
-	public abstract int find( Schluessel schluessel );
+	public abstract int find( Schluessel schluessel )
+			throws IllegalArgumentException;
 	
 	/**
 	 * Liefert ein Element mit Hilfe der Position.
 	 * @param position
 	 * @return
 	 */
-	public abstract T retrieve( int position );
+	public abstract T retrieve( int position )
+			throws IndexOutOfBoundsException;
 	
 	/**
 	 * Verbindet 2 Listen mit einander.

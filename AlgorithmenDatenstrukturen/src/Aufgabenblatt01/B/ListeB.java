@@ -23,11 +23,14 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#insert(int, Aufgabenblatt01.Knoten)
 	 */
 	@Override
-	public void insert(int position, T element) {
+	public void insert(int position, T element) 
+			throws IndexOutOfBoundsException, IllegalArgumentException {
 		
 		//pr�fe auf unkorrekte werte
-		if(!(position > 0 && position <= (anzahlElemente+1))){
-			throw new IndexOutOfBoundsException();
+		if ((anzahlElemente+1) < position || 1 > position ){
+			throw new IndexOutOfBoundsException(); 
+		} else if (null == element){
+			throw new IllegalArgumentException();
 		}
 		
 		KnotenB<T> neuerKnoten = new KnotenB<T>(element);

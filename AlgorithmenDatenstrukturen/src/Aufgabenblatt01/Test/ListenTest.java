@@ -14,20 +14,20 @@ import Aufgabenblatt01.B.ListeB;
 import Aufgabenblatt01.C.ListeC;
 
 /**
- * @author Florian Heuer
+ * 
  *
  */
 public class ListenTest {
 	
 	Liste<Integer> l = 
-			new ListeA<Integer>();
-	//      new ListeB<Integer>();
+	//		new ListeA<Integer>();
+			new ListeB<Integer>();
 	//      new ListeC<Integer>();
 	
 	Liste<Integer> l2 = 
-			    new ListeA<Integer>();
-			//    new ListeB<Integer>();
-			//    new ListeC<Integer>();
+	//		new ListeA<Integer>();
+			new ListeB<Integer>();
+	//		new ListeC<Integer>();
 	
 	// ------------------------------------------------- INSERT
 	@Test
@@ -131,15 +131,10 @@ public class ListenTest {
 		l.insert(4, 7);
 		// Normalfall
 		Assert.assertEquals(4, l.getSize());
-		Schluessel key1=new Schluessel(1001);
-		Schluessel key2=new Schluessel(1002);
+		Schluessel key2 = new Schluessel(1002);
 		Assert.assertEquals(2, l.find(key2));
 		l.delete(key2);
 		Assert.assertEquals(-1, l.find(key2));
-		
-		//Assert.assertEquals(2, l.find(key2));
-		
-				// Sonderfaelle
 	}
 	
 	@Test(expected=IllegalArgumentException.class)

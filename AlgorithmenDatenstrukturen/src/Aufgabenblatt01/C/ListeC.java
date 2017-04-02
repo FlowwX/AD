@@ -73,7 +73,8 @@ public class ListeC<T> extends Liste<T> {
 	}
 
 	@Override
-	public void delete(Schluessel schluessel) throws IllegalArgumentException{
+	public void delete(Schluessel schluessel) 
+			throws IllegalArgumentException{
 		
 		if (null == schluessel){
 			throw new IllegalArgumentException();
