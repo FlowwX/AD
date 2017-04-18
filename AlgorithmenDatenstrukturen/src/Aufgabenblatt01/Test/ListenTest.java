@@ -100,10 +100,6 @@ public class ListenTest {
 		Assert.assertEquals((Integer)3, l.retrieve(1));
 		Assert.assertEquals((Integer)6, l.retrieve(2));
 		Assert.assertEquals((Integer)7, l.retrieve(3));
-		
-		// Normalfall
-		
-				// Sonderfaelle
 	}
 	
 	

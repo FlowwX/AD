@@ -74,10 +74,13 @@ public class ListeA<T> extends Liste<T>{
 		}
 		
 		for (int i = position; i < anzahlElemente ; i++ ){
+			
 			arrayLst[i]= arrayLst[i+1];
+			statistikZaehler+=1;
 		}
 		
 		anzahlElemente--;
+		statistikZaehler+=2;
 	}
 	
 	@Override
@@ -92,7 +95,7 @@ public class ListeA<T> extends Liste<T>{
 			
 		
 		if (-1 != pos) {
-			delete(find(schluessel));
+			delete(pos);
 		} else {
 //			System.out.println("Zu loeschendes Element mit Key " + schluessel.getWert() + " ist nicht in Liste enthalten, findschluessel: "+ find(schluessel));
 		}			
@@ -109,16 +112,19 @@ public class ListeA<T> extends Liste<T>{
 		//find with stop element
 		Schluessel old = arrayLst[0].getSchluessel();
 		arrayLst[0].setSchluessel(schluessel);
-		
+
 		
 		int pos = anzahlElemente;
 		
-		System.out.println("befor while"  + arrayLst[pos-1].getSchluessel().getWert());
-		System.out.println("pos 0 "  + arrayLst[0].getSchluessel().getWert());
+		statistikZaehler+=3;
+		
+		//System.out.println("befor while"  + arrayLst[pos-1].getSchluessel().getWert());
+		//System.out.println("pos 0 "  + arrayLst[0].getSchluessel().getWert());
 		
 		while(!( arrayLst[pos].getSchluessel().equals(schluessel) )){
-			System.out.println("insige while " + arrayLst[pos].getSchluessel().getWert());
+			//System.out.println("insige while " + arrayLst[pos].getSchluessel().getWert());
 			pos--;
+			statistikZaehler+=1;
 		}
 		
 		arrayLst[0].setSchluessel(old);
@@ -152,13 +158,16 @@ public class ListeA<T> extends Liste<T>{
 		if ( liste.getSize() == 0) return;
 		
 		int anzahlElementeBeiderListen = anzahlElemente + liste.getSize();
+		statistikZaehler+=1;
 		while (anzahlElementeBeiderListen >= (arrayLst.length-1)) {
 			resizeArray(arrayLst.length*2);
 		}
 		int oldAnzahlElemente = anzahlElemente;
+		statistikZaehler+=1;
 		
 		for (int i = anzahlElemente+1; i <= anzahlElementeBeiderListen ; i++) {	
 			// anzahlElemente incrementiert sich selbst in insert
+			statistikZaehler+=1;
 			this.insert(i, ( liste.retrieve( (i - oldAnzahlElemente) ) ) );
 		}
 		

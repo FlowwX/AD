@@ -45,7 +45,7 @@ public class ListeC<T> extends Liste<T> {
 		anzahlElemente++;
 		
 		//AUFWAND INKREMENTIEREN
-		statistikZaehler+=7;
+		statistikZaehler+=6;
 		return;
 	}
 
@@ -59,7 +59,6 @@ public class ListeC<T> extends Liste<T> {
 		
 		KnotenC<T> prev = getNode(position -1 );
 		//AUFWAND INKREMENTIEREN
-		statistikZaehler+=1;
 		
 		KnotenC<T> del = prev.getNext();
 		prev.setNext(prev.getNext().getNext());
@@ -101,13 +100,14 @@ public class ListeC<T> extends Liste<T> {
 			knoten.setNext(knoten.getNext().getNext());
 			// gc wird knoten.next loeschen.
 			
+			
 		}
-		//AUFWAND INKREMENTIEREN
-		statistikZaehler+=2;
+		statistikZaehler+=3;
+		
 		tail.setSchluessel(oldTailKey);
 		anzahlElemente--;
 		//AUFWAND INKREMENTIEREN
-		statistikZaehler+=3;
+		statistikZaehler+=2;
 		return;
 		//int pos = find();
 		

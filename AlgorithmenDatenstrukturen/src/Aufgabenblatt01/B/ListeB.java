@@ -3,7 +3,6 @@
  */
 package Aufgabenblatt01.B;
 
-import Aufgabenblatt01.Knoten;
 import Aufgabenblatt01.Liste;
 import Aufgabenblatt01.Schluessel;
 
@@ -88,12 +87,12 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#delete(int)
 	 */
 	@Override
-	public void delete(int position) {
+	public void delete(int position) throws IndexOutOfBoundsException
+	{
+		if (anzahlElemente < position || 1 > position ){
+			throw new IndexOutOfBoundsException(); 
+		} 
 		
-		//pr�fe auf invlide Eingabe f�r position
-		if(!(position > 0 && position <= anzahlElemente )){
-			throw new IndexOutOfBoundsException();
-		}
 		
 		KnotenB<T> knoten 		= getNode(position);
 		KnotenB<T> vorKnoten	= (KnotenB<T>) knoten.getPrev();
@@ -124,7 +123,14 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#delete(java.lang.Integer)
 	 */
 	@Override
-	public void delete(Schluessel schluessel) {
+	public void delete(Schluessel schluessel) 
+		throws IllegalArgumentException{
+			
+			if (null == schluessel){
+				throw new IllegalArgumentException();
+			}
+		
+		
 		int position = find(schluessel);
 		if(position > 0){
 			delete(position);
@@ -138,10 +144,14 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#find(int)
 	 */
 	@Override
-	public int find(Schluessel schluessel) {
+	public int find(Schluessel schluessel) throws IllegalArgumentException{
+		
+		if (null == schluessel){
+			throw new IllegalArgumentException();
+		}
 		
 		KnotenB<T> knoten 	= head;
-		int position 		= 0;
+		int position 		= -1;
 		int zaehler 		= 0;
 		
 		//AUFWAND INKREMENTIEREN
@@ -166,7 +176,11 @@ public class ListeB<T> extends Liste<T> {
 	 * @see Aufgabenblatt01.Liste#retrieve(int)
 	 */
 	@Override
-	public T retrieve(int position) {
+	public T retrieve(int position) throws IndexOutOfBoundsException {
+		
+		if (anzahlElemente < position || 1 > position ){
+			throw new IndexOutOfBoundsException(); 
+		} 
 		return (T) getNode(position).getDaten();
 	}
 	
@@ -176,6 +190,9 @@ public class ListeB<T> extends Liste<T> {
 	@Override
 	public void concat(Liste<T> liste) {
 		
+		if (liste == null ) return ;
+		if ( liste.getSize() == 0) return;
+		
 		//finde ende von liste
 		KnotenB<T> letzterKnoten = getNode(anzahlElemente);
 		KnotenB<T> ersterKnoten  = ((ListeB) liste).getHead();
@@ -183,17 +200,14 @@ public class ListeB<T> extends Liste<T> {
 		//AUFWAND INKREMENTIEREN
 		statistikZaehler+=2;
 		
-		try {
-			letzterKnoten.setNext(ersterKnoten);
-		} catch (NullPointerException e) {
-			// leere Liste
-		}
+		letzterKnoten.setNext(ersterKnoten);
 		
-		try {
-			ersterKnoten.setPrev(letzterKnoten);
-		} catch (NullPointerException e) {
-			// leere Liste
-		}
+		
+		ersterKnoten.setPrev(letzterKnoten);
+
+		
+		anzahlElemente += liste.getSize();
+		
 		
 		//AUFWAND INKREMENTIEREN
 		statistikZaehler+=2;
