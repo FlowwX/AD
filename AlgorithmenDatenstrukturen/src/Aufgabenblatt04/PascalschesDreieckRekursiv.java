@@ -14,14 +14,14 @@ public class PascalschesDreieckRekursiv {
 	 * @return Nte Zeile wird zurück gegeben
 	 */
 	public static int[] getLinePascals(int N) {
-		System.out.println("PascalschesDreieckRekursiv");
 		int[] pascal = new int[N];
 		for (int k = 0; k < N; k++) {
 			count++;
 			pascal[k] = pascalRekursiv(N - 1, k);
-			System.out.print(pascal[k] + " ");
+//			System.out.print(pascal[k] + " ");
 		}
-		System.out.println("\nCount: " + count);
+		System.out.println("Count:\t" + count);
+		count = 0;
 		return pascal;
 	}
 
@@ -42,6 +42,20 @@ public class PascalschesDreieckRekursiv {
 	}
 
 	public static void main(String[] args) {
-		getLinePascals(10);
+//		System.out.println("PascalschesDreieckRekursiv");
+//		for (int i = 0; i <= 4; i++) {
+//			int exp = (int) Math.pow(2, i);
+////			System.out.print("N =\t" + exp + "\t");
+//			System.out.print("N =\t2^" +i + "\t");
+//			getLinePascals(exp);
+//		}
+		
+		System.out.println("PascalschesDreieckRekursiv");
+		for (int i = 0; i <= 16; i++) {
+			int exp = i;
+//			System.out.print("N =\t" + exp + "\t");
+			System.out.print("N =\t2^" +i + "\t");
+			getLinePascals(exp);
+		}
 	}
 }
