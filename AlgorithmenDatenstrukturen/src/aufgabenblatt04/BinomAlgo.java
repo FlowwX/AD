@@ -25,7 +25,8 @@ public class BinomAlgo implements Pascal3eck{
 			
 			zaehler++;
 			
-			zeile[k] = (int) (fakultaet( n ) / ( fakultaet( k ) * fakultaet( n - k ) ));
+			//zeile[k] = (int) (fakultaet( n ) / ( fakultaet( k ) * fakultaet( n - k ) ));
+			zeile[k] = binomialkoeffizient2(n, k);
 						
 		}
 		
@@ -43,6 +44,31 @@ public class BinomAlgo implements Pascal3eck{
         return fakul;
 	}
 	
+	private int binomialkoeffizient(int n, int k){
+		int bin=1;
+		
+
+		for(int i = 1; i <= k; i++){
+			 bin = bin * (n - i + 1) / i;
+			 zaehler++;
+		}
+               
+
+		
+		return bin;
+	}
+	
+	private int binomialkoeffizient2(int n, int k){
+		
+		zaehler++;
+		
+		if( k == 0 )return 1;
+		
+		if( 2*k > n ) return binomialkoeffizient(n, n-k);
+		
+		return (n+1-k)/k*binomialkoeffizient(n,k-1);
+	}
+	
 	
 	public long getLaufzeit(){
 		return time_end - time_start;
@@ -53,14 +79,17 @@ public class BinomAlgo implements Pascal3eck{
 	 */
 	public static void main(String[] args) {
 
-		int n = 10;
+		for (int i = 0; i <= 16; i++) {
+			int exp = (int) Math.pow(2, i);
+	
+			// System.out.print("N =\t2^" +i + "\t");
+			BinomAlgo a = new BinomAlgo();
+			
+			int[] zeile = a.getZeile(exp);
+			System.out.println("\nZeile: " + exp + "\nAufwand: " + a.zaehler);
+			System.out.println("Laufzeit: " + a.getLaufzeit());
+		}
 		
-		BinomAlgo a = new BinomAlgo();
-		
-		int[] zeile = a.getZeile(n);
-
-		System.out.println("\nZeile: " + n + "\nAufwand: " + a.zaehler);
-		System.out.println("Laufzeit: " + a.getLaufzeit());
 	} 
 
 
