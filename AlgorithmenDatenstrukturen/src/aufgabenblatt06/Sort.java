@@ -5,9 +5,9 @@ public abstract class Sort {
 	protected static int[] A;
 	protected static int N;
 	
-	public static int VERGLEICHE;
-	public static int TAUSCHE;
-	public static int ZUWEISUNGEN;
+	public static long VERGLEICHE;
+	public static long TAUSCHE;
+	public static long ZUWEISUNGEN;
 	
 	public static long START;
 	public static long ENDE;

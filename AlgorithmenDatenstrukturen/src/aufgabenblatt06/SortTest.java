@@ -11,7 +11,7 @@ public class SortTest {
 		for(int i=0; i<n; i++){
 			int offset = (int) (Math.random()*n*100);
 			int key = START*n+offset;
-			int value = (int) (Math.random()*1000)+1;
+			int value = (int) (Math.random()*1000)+1000;
 			
 			menge[key] = value;
 		}

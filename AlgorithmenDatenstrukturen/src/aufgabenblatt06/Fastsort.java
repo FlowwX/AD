@@ -8,7 +8,7 @@ public class Fastsort extends Sort {
 	private static int[] RESULT;
 	
 	
-	public static void run(int[] a, int n) {
+	public static int[] run(int[] a, int n) {
 		
 		//reset Zählervariablen
 		VERGLEICHE 	= 0;
@@ -27,6 +27,8 @@ public class Fastsort extends Sort {
 		A = RESULT;
 		
 		sort(0, A.length-1 );
+		
+		return RESULT;
 	}
 	
 	private static void sort(int lo, int hi) {
@@ -92,7 +94,7 @@ public class Fastsort extends Sort {
 		int schluesselGefunden = 0;
 		int i = KEY_START*N;
 		
-		while(schluesselGefunden < N){
+		while(schluesselGefunden < N && i < KEY_ENDE*N){
 			if(A[i]>0){
 				RESULT[schluesselGefunden] = A[i];
 				schluesselGefunden++;

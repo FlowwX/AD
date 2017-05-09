@@ -10,7 +10,7 @@ import aufgabenblatt05.Quicksort;
 
 public class FastsortTest extends SortTest {
 	
-	public static int N = 1000;
+	public static int N = 10;
 	
 	private int[] mengeUnsortiertA;
 	private int[] mengeUnsortiertB;
@@ -26,10 +26,10 @@ public class FastsortTest extends SortTest {
 		Quicksort.run(mengeUnsortiertA);			
 		Quicksort.log();
 		
-		Fastsort.run(mengeUnsortiertB, N);
+		int[] result = Fastsort.run(mengeUnsortiertB, N);
 		Fastsort.log();
 		
-		assertTrue("Fehler: Menge ist nicht sortiert.", istSortiert(mengeUnsortiertA));
+		assertTrue("Fehler: Menge ist nicht sortiert.", istSortiert(result));
 	}
 
 }
