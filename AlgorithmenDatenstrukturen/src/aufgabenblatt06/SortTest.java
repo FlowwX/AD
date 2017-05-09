@@ -6,14 +6,14 @@ public class SortTest {
 	private static int ENDE  = 800;
 	
 	public int[] generiereMenge(int n) {
-		int[] menge = new int[ENDE * n + 1];
+		int[] menge = new int[n];
 		 
 		for(int i=0; i<n; i++){
-			int offset = (int) (Math.random()*n*100);
+			int offset = ((int) (Math.random()*(ENDE+1)))*n;
 			int key = START*n+offset;
-			int value = (int) (Math.random()*1000)+1000;
+			//int value = (int) (Math.random()*1000)+1000;
 			
-			menge[key] = value;
+			menge[i] = key;
 		}
 		
 		return menge;
