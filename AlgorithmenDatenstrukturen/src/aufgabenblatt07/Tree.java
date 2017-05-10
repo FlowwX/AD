@@ -7,7 +7,7 @@ package aufgabenblatt07;
  * @author 
  *
  */
-public abstract class Tree<T> {
+public abstract class Tree<T extends Comparable<T>> {
 	
 	/**
 	 * 
