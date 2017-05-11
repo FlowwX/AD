@@ -7,7 +7,7 @@ package aufgabenblatt07;
  * @author 
  *
  */
-public class NodeTree<T> extends Tree<T> {
+public class NodeTree<T extends Comparable<T>> extends Tree<T> {
 
 	@Override
 	public void insert(T item) {
