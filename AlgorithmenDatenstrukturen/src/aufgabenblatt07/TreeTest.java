@@ -3,6 +3,11 @@ package aufgabenblatt07;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public abstract class TreeTest {
 	public abstract Tree<Integer> getTree();
 	
@@ -19,8 +24,8 @@ public abstract class TreeTest {
 		tree.insert(3);
 		tree.insert(6);
 		tree.insert(11);
-		assertTrue("preOrder failed", preOrder.equals(tree.preOrder()));
-		assertTrue("inOrder failed", inOrder.equals(tree.inOrder()));
-		assertTrue("postOrder failed", postOrder.equals(tree.postOrder()));
+		assertEquals("preOrder failed", Stream.of(preOrder).collect(Collectors.toList()), tree.preOrder());
+		assertEquals("inOrder failed", Stream.of(inOrder).collect(Collectors.toList()), tree.inOrder());
+		assertEquals("postOrder failed", Stream.of(postOrder).collect(Collectors.toList()), tree.postOrder());
 	}
 }
