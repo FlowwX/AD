@@ -15,7 +15,7 @@ public abstract class TreeTest {
 	public void testOrders(){
 		Tree<Integer> tree = getTree();
 		Integer[] preOrder = {4,2,1,3,9,6,11};
-		Integer[] inOrder = {1,2,3,4,6,8,9,11};
+		Integer[] inOrder = {1,2,3,4,6,9,11};
 		Integer[] postOrder = {1,3,2,6,11,9,4};
 		tree.insert(4);
 		tree.insert(2);
