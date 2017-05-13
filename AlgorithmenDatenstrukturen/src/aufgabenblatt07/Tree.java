@@ -3,8 +3,6 @@
  */
 package aufgabenblatt07;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  * @author
  *
@@ -52,26 +50,23 @@ public abstract class Tree<T extends Comparable<T>> {
 	 * @return Array of T with all the items currently in the tree
 	 */
 	public T[] preOrder() {
-		throw new NotImplementedException();
-		//return null;
+		return null;
 	}
 
 	/**
 	 * @brief Gets the items in tree in postOrder ordering
 	 * @return Array of T with all the items currently in the tree
 	 */
-	public void postOrder() {
-		throw new NotImplementedException();
-		//return null;
+	public T[] postOrder() {
+		return null;
 	}
 
 	/**
 	 * @brief Gets the items in tree in inOrder ordering
 	 * @return Array of T with all the items currently in the tree
 	 */
-	public void inOrder() {
-		throw new NotImplementedException();
-		//return null;
+	public T[] inOrder() {
+		return null;
 	}
 
 }
