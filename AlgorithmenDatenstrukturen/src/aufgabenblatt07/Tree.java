@@ -46,6 +46,12 @@ public abstract class Tree<T extends Comparable<T>> {
 	public abstract T getRightChild(T parent);
 
 	/**
+	 * @brief Returns the root element of the tree
+	 * @return Root item of the tree, null if the tree is empty 
+	 */
+	protected abstract T getRoot();
+
+	/**
 	 * @brief Gets the items in tree in preOrder ordering
 	 * @return Array of T with all the items currently in the tree
 	 */

@@ -135,4 +135,9 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 		}
 		return str + "]";
 	}
+
+	@Override
+	protected T getRoot(){
+		return arr.get(1);
+	}
 }
