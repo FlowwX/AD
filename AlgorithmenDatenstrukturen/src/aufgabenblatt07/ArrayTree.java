@@ -1,33 +1,52 @@
 package aufgabenblatt07;
 
+/**
+ * TODO Error checking
+ * TODO Inser(T,int) noetig?
+ * @author lasse
+ *
+ * @param <T>
+ */
 public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
-	private class customArray<T>{
-		private T[] arr;
+	private class customArray<AT>{
+		private AT[] arr;
+
 		public customArray(){
 			this(20);
 		}
+
+		@SuppressWarnings("unchecked")
 		public customArray(int size){
-			arr = (T[])new Object[size];
+			arr = (AT[])new Object[size];
 		}
-		public T get(int index){
+
+		public AT get(int index){
 			if(index >= 0 && index < arr.length){
 				return arr[index];
 			} else return null;
 		}
-		public void set(int index, T item){
+
+		@SuppressWarnings("unchecked")
+		public void set(int index, AT item){
 			if(index < 0) return;
 			if(index >= arr.length){
 				Object[] tmpArr = new Object[index + 1];
 				System.arraycopy(arr, 0, tmpArr, 0, arr.length);
-				arr = (T[])tmpArr;
+				arr = (AT[])tmpArr;
 			}
 			arr[index] = item;
 		}
+
 		public int size(){
 			return arr.length;
 		}
 	}
 	private customArray<T> arr;
+
+	public ArrayTree(){
+		arr = new customArray<T>();
+		arr.set(0, null);
+	}
 
 	public ArrayTree(int size) {
 		arr = new customArray<T>(size + 1);
@@ -41,6 +60,23 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 			return false;
 		insert(item, ind);
 		return true;
+	}
+
+	@Override
+	public T getLeftChild(T parent) {
+		int ind = getLeftChildInd(getIndexOf(parent));
+		return ind > 0 ? arr.get(ind) : null;
+	}
+
+	@Override
+	public T getRightChild(T parent) {
+		int ind = getRightChildInd(getIndexOf(parent));
+		return ind > 0 ? arr.get(ind) : null;
+	}
+
+	@Override
+	protected T getRoot(){
+		return arr.get(1);
 	}
 
 	private int findInsertionInd(T item) {
@@ -65,13 +101,9 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 				} else {
 					indParent = indRight;
 				}
-			} else return 0; // schon vorhanden
+			} else return 0;
 		}
 		return indParent;
-	}
-	
-	private boolean isBetween(T item, T lowerBound, T upperBound){
-		return (lowerBound == null || item.compareTo(lowerBound) > 0) && (upperBound == null || item.compareTo(upperBound) < 0);
 	}
 
 	private void insert(T item, int ind) {
@@ -83,18 +115,6 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 			}
 		}
 		arr.set(ind, item);
-	}
-
-	@Override
-	public T getLeftChild(T parent) {
-		int ind = getLeftChildInd(getIndexOf(parent));
-		return ind > 0 ? arr.get(ind) : null;
-	}
-
-	@Override
-	public T getRightChild(T parent) {
-		int ind = getRightChildInd(getIndexOf(parent));
-		return ind > 0 ? arr.get(ind) : null;
 	}
 
 	private int getLeftChildInd(int parentInd) {
@@ -130,10 +150,5 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 			str +=  tmp == null ? "null " : tmp.toString() + " ";
 		}
 		return str + "]";
-	}
-
-	@Override
-	protected T getRoot(){
-		return arr.get(1);
 	}
 }
