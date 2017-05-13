@@ -111,15 +111,19 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 
 	private int getIndexOf(T item) {
 		int i = 1;
-		int cmp = item.compareTo(arr.get(i));
-		while (cmp != 0 && i <= arr.size()) {
-			cmp = item.compareTo(arr.get(i));
-			if (cmp < 0)
+
+		T node = arr.get(i);
+		while(node != null){
+			int cmp = item.compareTo(node);
+			if(cmp == 0)
+				return i;
+			else if(cmp < 0)
 				i = getLeftChildInd(i);
 			else
 				i = getRightChildInd(i);
+			node = arr.get(i);
 		}
-		return i <= arr.size() ? i : 0;
+		return 0;
 	}
 
 	@Override
