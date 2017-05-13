@@ -3,7 +3,7 @@
  */
 package aufgabenblatt07;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -62,12 +62,13 @@ public abstract class Tree<T extends Comparable<T>> {
 		return preOrderRec(getRoot());
 	}
 
-	private ArrayList<T> preOrderRec(T root){
-		ArrayList<T> l = new ArrayList<T>();
+	private List<T> preOrderRec(T root){
+		List<T> l = new LinkedList<T>();
 		if(root != null){
 			l.add(root);
-		l.addAll(preOrderRec(getLeftChild(root)));
-		l.addAll(preOrderRec(getRightChild(root)));}
+			l.addAll(preOrderRec(getLeftChild(root)));
+			l.addAll(preOrderRec(getRightChild(root)));
+		}
 		return l;
 	}
 
@@ -76,7 +77,17 @@ public abstract class Tree<T extends Comparable<T>> {
 	 * @return List of T with all the items currently in the tree
 	 */
 	public List<T> postOrder() {
-		return null;
+		return postOrderRec(getRoot());
+	}
+
+	private List<T> postOrderRec(T root){
+		List<T> l = new LinkedList<T>();
+		if(root != null){
+			l.addAll(postOrderRec(getLeftChild(root)));
+			l.addAll(postOrderRec(getRightChild(root)));
+			l.add(root);
+		}
+		return l;
 	}
 
 	/**
@@ -84,7 +95,17 @@ public abstract class Tree<T extends Comparable<T>> {
 	 * @return List of T with all the items currently in the tree
 	 */
 	public List<T> inOrder() {
-		return null;
+		return inOrderRec(getRoot());
+	}
+
+	private List<T> inOrderRec(T root){
+		List<T> l = new LinkedList<T>();
+		if(root != null){
+			l.addAll(inOrderRec(getLeftChild(root)));
+			l.add(root);
+			l.addAll(inOrderRec(getRightChild(root)));
+		}
+		return l;
 	}
 
 }
