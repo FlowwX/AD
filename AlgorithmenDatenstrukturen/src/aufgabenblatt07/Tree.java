@@ -3,6 +3,9 @@
  */
 package aufgabenblatt07;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author
  *
@@ -53,25 +56,34 @@ public abstract class Tree<T extends Comparable<T>> {
 
 	/**
 	 * @brief Gets the items in tree in preOrder ordering
-	 * @return Array of T with all the items currently in the tree
+	 * @return List of T with all the items currently in the tree
 	 */
-	public T[] preOrder() {
-		return null;
+	public List<T> preOrder() {
+		return preOrderRec(getRoot());
+	}
+
+	private ArrayList<T> preOrderRec(T root){
+		ArrayList<T> l = new ArrayList<T>();
+		if(root != null){
+			l.add(root);
+		l.addAll(preOrderRec(getLeftChild(root)));
+		l.addAll(preOrderRec(getRightChild(root)));}
+		return l;
 	}
 
 	/**
 	 * @brief Gets the items in tree in postOrder ordering
-	 * @return Array of T with all the items currently in the tree
+	 * @return List of T with all the items currently in the tree
 	 */
-	public T[] postOrder() {
+	public List<T> postOrder() {
 		return null;
 	}
 
 	/**
 	 * @brief Gets the items in tree in inOrder ordering
-	 * @return Array of T with all the items currently in the tree
+	 * @return List of T with all the items currently in the tree
 	 */
-	public T[] inOrder() {
+	public List<T> inOrder() {
 		return null;
 	}
 
