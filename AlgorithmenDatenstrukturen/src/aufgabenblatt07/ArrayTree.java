@@ -1,9 +1,5 @@
 package aufgabenblatt07;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 	private class customArray<T>{
 		private T[] arr;
