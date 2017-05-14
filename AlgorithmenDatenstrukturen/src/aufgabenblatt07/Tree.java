@@ -20,7 +20,7 @@ public abstract class Tree<T extends Comparable<T>> {
 	 *            already be another item with the same value (regarding its
 	 *            comparisons) in the tree.
 	 * @return True if item was inserted, false if item was already in the tree
-	 * @exception InvalidArgumentException
+	 * @exception IllegalArgumentException
 	 *                if item is null
 	 * 
 	 */
@@ -32,7 +32,7 @@ public abstract class Tree<T extends Comparable<T>> {
 	 *            The parent node to get the child of
 	 * @return Child item, if the parent has a left child. null, if the parent
 	 *         is not in the tree. null, if the parent has no left child.
-	 * @exception InvalidArgumentException
+	 * @exception IllegalArgumentException
 	 *                if parent is null
 	 */
 	public abstract T getLeftChild(T parent);
@@ -43,7 +43,7 @@ public abstract class Tree<T extends Comparable<T>> {
 	 *            The parent node to get the child of
 	 * @return Child item, if the parent has a right child. null, if the parent
 	 *         is not in the tree. null, if the parent has no right child.
-	 * @exception InvalidArgumentException
+	 * @exception IllegalArgumentException
 	 *                if parent is null
 	 */
 	public abstract T getRightChild(T parent);

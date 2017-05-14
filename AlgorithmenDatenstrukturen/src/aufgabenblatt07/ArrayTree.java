@@ -55,6 +55,9 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 
 	@Override
 	public boolean insert(T item) {
+		if (item == null)
+			throw new IllegalArgumentException("item must not be null");
+
 		int ind = findInsertionInd(item);
 		if (ind == 0)
 			return false;
@@ -64,12 +67,18 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 
 	@Override
 	public T getLeftChild(T parent) {
+		if (parent == null)
+			throw new IllegalArgumentException("parent must not be null");
+
 		int ind = getLeftChildInd(getIndexOf(parent));
 		return ind > 0 ? arr.get(ind) : null;
 	}
 
 	@Override
 	public T getRightChild(T parent) {
+		if (parent == null)
+			throw new IllegalArgumentException("parent must not be null");
+
 		int ind = getRightChildInd(getIndexOf(parent));
 		return ind > 0 ? arr.get(ind) : null;
 	}
