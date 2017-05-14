@@ -89,7 +89,7 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 		int ind = findInsertionInd(item);
 		if (ind == 0)
 			return false;
-		insert(item, ind);
+		arr.set(ind, item);
 		return true;
 	}
 
@@ -142,17 +142,6 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 				return 0;
 		}
 		return indParent;
-	}
-
-	private void insert(T item, int ind) {
-		if (arr.get(ind) != null) {
-			if (item.compareTo(arr.get(ind)) < 0) {
-				insert(arr.get(ind), getRightChildInd(ind));
-			} else if (item.compareTo(arr.get(ind)) > 0) {
-				insert(arr.get(ind), getLeftChildInd(ind));
-			}
-		}
-		arr.set(ind, item);
 	}
 
 	private int getLeftChildInd(int parentInd) {
