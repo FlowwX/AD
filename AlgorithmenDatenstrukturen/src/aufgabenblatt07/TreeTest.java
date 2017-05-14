@@ -3,6 +3,9 @@ package aufgabenblatt07;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -77,6 +80,28 @@ public abstract class TreeTest {
 			assertTrue("Expected Exception when inserting null", false);
 		} catch (IllegalArgumentException e){
 			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void testRandomInput(){
+		int maxLen = 50;
+		Tree<Integer> tree = getTree();
+		List<Integer> sorted = new ArrayList<Integer>(maxLen);
+		Random rnd = new Random();
+		for(int round = 0; round < 10; round++){
+			int len = rnd.nextInt(maxLen);
+			for(int i = 0; i < len; i++){
+				int num = rnd.nextInt();
+				tree.insert(num);
+				sorted.add(num);
+			}
+			sorted.sort(null);
+			
+			List<Integer> treeSorted = tree.inOrder();
+			for(int i = 0; i < len; i++){
+				assertEquals("missmatch", sorted.get(i), treeSorted.get(i));
+			}
 		}
 	}
 }
