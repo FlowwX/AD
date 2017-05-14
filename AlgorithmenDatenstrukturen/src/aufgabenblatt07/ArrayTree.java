@@ -71,11 +71,21 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 
 	private customArray<T> arr;
 
+	/**
+	 * Default Constructor. Creates ArrayTree without specifying initial array
+	 * length.
+	 */
 	public ArrayTree() {
 		arr = new customArray<T>();
 		arr.set(0, null);
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param size
+	 *            Initial size of the array
+	 */
 	public ArrayTree(int size) {
 		arr = new customArray<T>(size + 1);
 		arr.set(0, null);
@@ -116,11 +126,20 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 		return arr.get(1);
 	}
 
+	/**
+	 * Retrieves the index for insertion of an item.
+	 *
+	 * @param item
+	 * @return 0 if the item is already present in the tree, the correct index
+	 *         to insert elsewise
+	 */
 	private int findInsertionInd(T item) {
 		int indParent = 1;
 		int indLeft = getLeftChildInd(indParent);
 		int indRight = getRightChildInd(indParent);
 
+		// Binary search through the tree; if item is found, return 0;
+		// return the a position of a null element
 		while (arr.get(indParent) != null) {
 			indLeft = getLeftChildInd(indParent);
 			indRight = getRightChildInd(indParent);
@@ -152,6 +171,9 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 		return parentInd < 1 ? 0 : 2 * parentInd + 1;
 	}
 
+	/*
+	 * Binary search
+	 */
 	private int getIndexOf(T item) {
 		int i = 1;
 
