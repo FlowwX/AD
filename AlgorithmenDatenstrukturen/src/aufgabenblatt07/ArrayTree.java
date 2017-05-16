@@ -1,9 +1,7 @@
 package aufgabenblatt07;
 
 /**
- * TODO Error checking TODO Inser(T,int) noetig?
- *
- * @param <T>
+ * Implementation of interface "Tree" using an array as data storage.
  */
 public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 	/**
@@ -22,7 +20,8 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 		}
 
 		/**
-		 * @brief Gets an item from the array.
+		 * Gets an item from the array.
+		 * 
 		 * @param index
 		 *            Should be positive, will return null for all indices < 0
 		 * @return Element at index, if present. null elsewise.
@@ -35,12 +34,12 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 		}
 
 		/**
-		 * @brief Sets an element of the array to given item. The element is
-		 *        specified by the index. If the index is < 0, the array remains
-		 *        unchanged. If the index is outside the array range, the array
-		 *        is extended to the required size. Newly generated elements are
-		 *        set to null. Any pre-existing item at the index will be
-		 *        overriden.
+		 * Sets an element of the array to given item. The element is specified
+		 * by the index. If the index is < 0, the array remains unchanged. If
+		 * the index is outside the array range, the array is extended to the
+		 * required size. Newly generated elements are set to null. Any
+		 * pre-existing item at the index will be overriden.
+		 * 
 		 * @param index
 		 *            Position in the array to set. Must be >= 0.
 		 * @param item

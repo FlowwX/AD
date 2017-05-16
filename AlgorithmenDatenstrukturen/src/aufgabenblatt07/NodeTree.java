@@ -4,10 +4,6 @@
 package aufgabenblatt07;
 
 
-/**
- * @author 
- *
- */
 public class NodeTree<T extends Comparable<T>> extends Tree<T> {
 
 	
