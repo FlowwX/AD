@@ -3,9 +3,6 @@
  */
 package aufgabenblatt07;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author 
@@ -17,7 +14,6 @@ public class NodeTree<T extends Comparable<T>> extends Tree<T> {
 	private T value;
 	
 	private NodeTree<T> parent;
-
 
 	private NodeTree<T> leftChild;
 	private NodeTree<T> rightChild;
@@ -34,22 +30,33 @@ public class NodeTree<T extends Comparable<T>> extends Tree<T> {
 	@Override
 	public boolean insert(T item) {
 		
+		if (item == null)
+			throw new IllegalArgumentException("item must not be null");
+		
+		//first insert
+		if(value==null){
+			value = item;
+			return true;
+		}
+		
 		final int comp = -value.compareTo(item);
 		
-		if(comp==LESS||comp==EQUAL){
+		if(comp==LESS){
 			if( leftChild != null ) {
-				leftChild.insert(item);
+				return leftChild.insert(item);
 			}
 			else{
 				leftChild = new NodeTree<T>(item, this);
+				return true;
 			}
 		}
 		else if(comp==GREATER){
 			if( rightChild != null ) {
-				rightChild.insert(item);
+				return rightChild.insert(item);
 			}
 			else{
 				rightChild = new NodeTree<T>(item, this);
+				return true;
 			}
 		}
 				
@@ -58,14 +65,20 @@ public class NodeTree<T extends Comparable<T>> extends Tree<T> {
 	
 	@Override
 	public T getLeftChild(T parent) {
+		if (parent == null)
+			throw new IllegalArgumentException("item must not be null");
+		
 		NodeTree<T> node = findNode(parent, getRootNode());
-		return node.leftChild!=null?node.leftChild.getValue():null;
+		return node!=null && node.leftChild!=null?node.leftChild.getValue():null;
 	}
 	
 	@Override
 	public T getRightChild(T parent) {
+		if (parent == null)
+			throw new IllegalArgumentException("item must not be null");
+		
 		NodeTree<T> node = findNode(parent, getRootNode());
-		return node.rightChild!=null?node.rightChild.getValue():null;
+		return node!=null && node.rightChild!=null?node.rightChild.getValue():null;
 	}
 
 	public T getValue() {
@@ -109,31 +122,5 @@ public class NodeTree<T extends Comparable<T>> extends Tree<T> {
 		
 		return  r;
 	}
-	
-	/**
-	 *  Ugly testing
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		NodeTree<Integer> btree = new NodeTree<Integer>(3, null);
 		
-		btree.insert(1);
-		btree.insert(7);
-		btree.insert(5);
-		btree.insert(9);
-		btree.insert(4);
-		btree.insert(8);
-		btree.insert(6);
-		btree.insert(0);
-		
-		List<Integer> list = btree.inOrder();
-System.out.println(list);
-		
-		System.out.println("fertig");
-		
-		
-	}
-
-
-	
 }
