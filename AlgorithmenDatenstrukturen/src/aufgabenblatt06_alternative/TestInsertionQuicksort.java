@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class TestInsertionQuicksort {
+import aufgabenblatt06.SortTest;
+
+public class TestInsertionQuicksort extends SortTest{
 
 	private final static int K = 6;
 	
@@ -18,7 +20,11 @@ public class TestInsertionQuicksort {
 	
 	@Test
 	public void testSort() {
-
+		int[] unsortiert = generiereFolge();
+		assertFalse("Menge ist sortiert.", istSortiert(unsortiert));
+		InsertionQuicksort sorter = new InsertionQuicksort();
+		sorter.sort(unsortiert);
+		assertTrue("Menge ist unsortiert.", istSortiert(unsortiert));
 	}
 	
 	public static void main(String[] args) {
