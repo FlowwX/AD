@@ -104,4 +104,22 @@ public abstract class TreeTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testFind(){
+		Tree<Integer> tree = getTree();
+		tree.insert(5);
+		tree.insert(0);
+		tree.insert(7);
+		tree.insert(35);
+		tree.insert(73);
+		tree.insert(13);
+		
+		assertEquals(new Integer(5), tree.find(5));
+		assertEquals(new Integer(0), tree.find(0));
+		assertEquals(new Integer(73), tree.find(73));
+		assertEquals(null, tree.find(15));
+		assertEquals(null, tree.find(-1));
+		assertEquals(null, tree.find(100));
+	}
 }

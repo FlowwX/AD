@@ -104,4 +104,15 @@ public abstract class Tree<T extends Comparable<T>> {
 		return l;
 	}
 
+	public T find(T comparator){
+		T node = getRoot();
+		while(node != null){
+			if(node.compareTo(comparator) > 0)
+				node = getLeftChild(node);
+			else if(node.compareTo(comparator) < 0)
+				node = getRightChild(node);
+			else break;
+		}
+		return node;
+	}
 }
