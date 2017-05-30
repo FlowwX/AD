@@ -17,13 +17,13 @@ public class SumTree {
 		TreeNode<Integer> root = tree.getRoot();
 		sumBiggerRec(root,0);
 	}
-	private int sumBiggerRec(TreeNode<Integer> n, int sumParent){
+	private int sumBiggerRec(TreeNode<Integer> n, int inheritedSum){
 		if(n == null) return 0;
 		TreeNode<Integer> rightChild = tree.getRightChild(n);
-		n.sum = sumParent;
+		n.sum = inheritedSum;
 		int sumRight = 0;
 		if(rightChild != null)
-			sumRight = sumBiggerRec(rightChild, sumParent);
+			sumRight = sumBiggerRec(rightChild, inheritedSum);
 		n.sum += sumRight;
 		return n.getValue() + sumRight + sumBiggerRec(tree.getLeftChild(n), n.sum + n.getValue());
 	}	
