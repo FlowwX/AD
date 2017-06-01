@@ -47,5 +47,10 @@ public class WeightedGraph<T> implements IWeightedGraph<T> {
 	public Iterator<Node<T>> iterator() {
 		return (Iterator<Node<T>>)(Object)adjacency.getNodes().iterator();
 	}
+	
+	@Override
+	public  String toString(){
+		return adjacency.toString();
+	}
 
 }
