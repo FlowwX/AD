@@ -6,4 +6,9 @@ public class Dijkstra {
 	public static <T> List<DijkstraNode> calculate(WeightedGraph graph, T destination) {
 		return null;
 	}
+	
+	public static void main(String[] args) {
+		WeightedGraph<?> wg = new WeightedGraph<>(GraphWeightedAdjacencyFactory.getEmptyNodesAdjacency(10, AdjacencyImplementation.MATRIX));
+		System.out.println(wg);
+	}
 }
