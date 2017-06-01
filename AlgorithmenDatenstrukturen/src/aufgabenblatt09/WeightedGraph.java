@@ -5,6 +5,11 @@ import java.util.List;
 
 
 public class WeightedGraph<T> implements IWeightedGraph<T> {
+	private WeightedAdjacency adjacency;
+	
+	public WeightedGraph(WeightedAdjacency adjacency) {
+		this.adjacency = adjacency;
+	}
 
 	@Override
 	public void insert(WeightedEdge<T> newEdge) {

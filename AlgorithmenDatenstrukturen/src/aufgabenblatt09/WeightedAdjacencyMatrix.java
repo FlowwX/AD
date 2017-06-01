@@ -1,17 +1,17 @@
 package aufgabenblatt09;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class AdjacencyMatrix implements Adjacency {
+public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 
 	@Override
-	public void insert(Edge<?> newEdge) {
+	public void insert(WeightedEdge<?> newEdge) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void delete(Edge<?> edge) {
+	public void delete(WeightedEdge<?> edge) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -2,16 +2,16 @@ package aufgabenblatt09;
 
 import java.util.List;
 
-public class AdjacencyList implements Adjacency {
+public class WeightedAdjacencyList implements WeightedAdjacency {
 
 	@Override
-	public void insert(Edge<?> newEdge) {
+	public void insert(WeightedEdge<?> newEdge) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Edge<?> edge) {
+	public void delete(WeightedEdge<?> edge) {
 		// TODO Auto-generated method stub
 		
 	}
