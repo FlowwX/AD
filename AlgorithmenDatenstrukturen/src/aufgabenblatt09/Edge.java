@@ -4,8 +4,8 @@ package aufgabenblatt09;
  * Edge between to nodes in a graph.
  */
 public class Edge<T> {
-	private Node<T> origin;
-	private Node<T> destination;
+	protected Node<T> origin;
+	protected Node<T> destination;
 	
 	public Node<T> getOrigin() {
 		return origin;
