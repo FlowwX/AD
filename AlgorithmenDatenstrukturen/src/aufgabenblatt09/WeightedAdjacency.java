@@ -1,9 +1,10 @@
 package aufgabenblatt09;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-public interface WeightedAdjacency {
+public interface WeightedAdjacency extends Serializable {
 	void insert(WeightedEdge<?> newEdge);
 	void delete(WeightedEdge<?> edge);
 	void delete(Node<?> node);
