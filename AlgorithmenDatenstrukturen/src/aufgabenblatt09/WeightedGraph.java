@@ -13,44 +13,39 @@ public class WeightedGraph<T> implements IWeightedGraph<T> {
 
 	@Override
 	public void insert(WeightedEdge<T> newEdge) {
-		// TODO Auto-generated method stub
-		
+		adjacency.insert(newEdge);
 	}
 
 	@Override
 	public void delete(WeightedEdge<T> edge) {
-		// TODO Auto-generated method stub
-		
+		adjacency.delete(edge);
 	}
 
 	@Override
 	public void delete(Node<T> node) {
-		// TODO Auto-generated method stub
-		
+		adjacency.delete(node);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getNeighbours(Node<T> node) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Node<T>> getNeighbours(Node<T> node) {
+		return (List<Node<T>>)(Object)adjacency.getNeighbours(node);
 	}
 
 	@Override
 	public boolean existsEdge(Node<T> node1, Node<T> node2) {
-		// TODO Auto-generated method stub
-		return false;
+		return adjacency.existsEdge(node1, node2);
 	}
 
 	@Override
 	public int getWeight(Node<T> node1, Node<T> node2) {
-		// TODO Auto-generated method stub
-		return 0;
+		return adjacency.getWeight(node1, node2);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Node<T>> iterator() {
+		return (Iterator<Node<T>>)(Object)adjacency.getNodes().iterator();
 	}
 
 }
