@@ -8,7 +8,7 @@ public class Dijkstra {
 	}
 	
 	public static void main(String[] args) {
-		WeightedGraph<?> wg = new WeightedGraph<>(GraphWeightedAdjacencyFactory.getEmptyNodesAdjacency(10, AdjacencyImplementation.MATRIX));
+		WeightedGraph<?> wg = new WeightedGraph<>(GraphWeightedAdjacencyFactory.getEmptyNodesAdjacency(10, AdjacencyImplementation.LIST));
 		System.out.println(wg);
 	}
 }
