@@ -21,4 +21,6 @@ public class WeightedEdge<T> extends Edge<T> {
 	public int getWeight(){
 		return weight;
 	}
+	
+	
 }

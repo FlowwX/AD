@@ -1,12 +1,14 @@
 package aufgabenblatt09;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Dijkstra {
 	public static <T> List<DijkstraNode<T>> calculate(WeightedGraph<T> graph, Node<T> destination) {
-		LinkedList<DijkstraNode<T>> nodes = new LinkedList<DijkstraNode<T>>();
+		
+		ArrayList<DijkstraNode<T>> nodes = new ArrayList<DijkstraNode<T>>();
 		LinkedList<Node<T>> nodes_ = new LinkedList<Node<T>>();
 		HashSet<DijkstraNode<T>> randliste = new HashSet<DijkstraNode<T>>();
 		
@@ -15,15 +17,19 @@ public class Dijkstra {
 		nodes_.add(destination);
 
 		do{
-			for(Node<T> randlistenKandidat : graph.getNeighbours(cDest.node)){
-				if(!nodes_.contains(randlistenKandidat))
-					randliste.add(new DijkstraNode<>(randlistenKandidat, cDest, cDest.cost + graph.getWeight(randlistenKandidat, cDest.node)));
+			List<Node<T>> neighbours = graph.getNeighbours(cDest.node);
+			for(Node<T> randlistenKandidat : neighbours){
+				if(!nodes_.contains(randlistenKandidat)) {
+					int weight = graph.getWeight(randlistenKandidat, cDest.node);
+					randliste.add(new DijkstraNode<>(randlistenKandidat, cDest, cDest.cost + weight ));
+				}
 			}
 			
 			for(DijkstraNode<T> n : randliste){
 				if(graph.existsEdge(n.node, cDest.node)){
-					if(n.cost > cDest.cost + graph.getWeight(n.node, cDest.node)){
-						n.cost = cDest.cost + graph.getWeight(n.node, cDest.node);
+					int weight = graph.getWeight(n.node, cDest.node);
+					if(n.cost > cDest.cost + weight){
+						n.cost = cDest.cost + weight;
 						n.next = cDest;
 					}
 				}
@@ -51,7 +57,7 @@ public class Dijkstra {
 
 	public static void main(String[] args) {
 		WeightedGraph<Integer> wg = new WeightedGraph<>(
-				GraphWeightedAdjacencyFactory.getSpecialEmptyNodesAdjacency(10, AdjacencyImplementation.MATRIX));
+				GraphWeightedAdjacencyFactory.getSpecialEmptyNodesAdjacency(10, AdjacencyImplementation.LIST));
 		System.out.println(wg);
 
 		List<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) GraphWeightedAdjacencyFactory.dest);

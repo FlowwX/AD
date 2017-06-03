@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class WeightedAdjacencyList implements WeightedAdjacency {
 
@@ -22,6 +23,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 				List<Node<?>> nodeList = new ArrayList<Node<?>>();
 				nodeList.add(newEdge.destination);
 				nodes.put(newEdge.origin, nodeList);
+				
 			}
 			else{
 				nodes.get(newEdge.origin).add(newEdge.destination);
@@ -29,7 +31,12 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 			
 			//check if nodes doesnt exist
 			if( !nodes.containsKey(newEdge.destination) ){
-				nodes.put(newEdge.destination, new ArrayList<Node<?>>());
+				List<Node<?>> nodeList = new ArrayList<Node<?>>();
+				nodeList.add(newEdge.origin);
+				nodes.put(newEdge.destination, nodeList);	
+			}
+			else{
+				nodes.get(newEdge.destination).add(newEdge.origin);
 			}
 			
 			//maintain edges
@@ -41,6 +48,16 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 			else{
 				edges.get(newEdge.origin).add(newEdge);
 			}
+			
+			//maintain edges
+			if(!edges.containsKey(newEdge.destination)){
+				List<Edge<?>> edgeList = new ArrayList<Edge<?>>();
+				edgeList.add(newEdge);
+				edges.put(newEdge.destination, edgeList);
+			}
+			else{
+				edges.get(newEdge.destination).add(newEdge);
+			}
 		}
 		
 	}
@@ -48,6 +65,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 	@Override
 	public void delete(WeightedEdge<?> edge) {
 		edges.get(edge.origin).remove(edge);
+		edges.get(edge.destination).remove(edge);
 	}
 
 	@Override
@@ -57,17 +75,40 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 
 	@Override
 	public boolean existsEdge(Node<?> node1, Node<?> node2) {
-		List<Edge<?>> list = edges.get(node1);
-		return (list==null)?false:list.contains(node2);
+		List<Edge<?>> list  = edges.get(node1);
+		List<Edge<?>> list2 = edges.get(node2);
+		
+		if(list!=null){
+			for(Edge<?> e : list){
+				if(e.destination == node2){
+					return true;
+				}
+			}
+		}
+
+		if(list2!=null){
+			for(Edge<?> e : list2){
+				if(e.destination == node1){
+					return true;
+				}
+			}	
+		}
+
+		return false;
 	}
 
 	@Override
 	public int getWeight(Node<?> node1, Node<?> node2) {
-			List<Edge<?>> edgeList = edges.get(node1);
-			int idx = edgeList.indexOf(node2);
-			if(idx>=0){
-				return ((WeightedEdge<?>)edgeList.get(idx)).getWeight();
+			
+		if( existsEdge(node1, node2) ){
+			List<Edge<?>> list = edges.get(node1);
+			for(Edge<?> e : list){
+				if( e.destination == node2 || e.origin == node2){
+					return ((WeightedEdge<?>) e).getWeight();
+				}
 			}
+		}
+			
 		return 0;
 	}
 
@@ -102,5 +143,41 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 	public Collection<Node<?>> getNodes() {
 		return nodes.keySet();
 	}
+	
+	@Override
+	public String toString() {
 
+		String buffer = "";
+		
+		for (Map.Entry<Node<?>, List<Node<?>>> entry : nodes.entrySet()) {
+			buffer += "Knoten: " + entry.getKey().uid;
+			
+			if(!entry.getValue().isEmpty()){
+				buffer += " -> Nachbarn -> ";
+				for(Node<?> n : entry.getValue()){
+					buffer += n.uid + ", ";
+				}
+			}
+
+			buffer += "\n";
+		}
+		
+		
+		return buffer;
+	}
+
+	public static void main(String[] args) {
+		/*WeightedGraph<String> g = new WeightedGraph<String>(
+				new WeightedAdjacencyList()
+		);*/
+		
+		WeightedAdjacencyList l = new WeightedAdjacencyList();
+		
+		l.insert(new WeightedEdge<String>(new Node<String>(), new Node<String>(), 1));
+		
+		Set<?> k = l.edges.keySet();
+		
+		System.out.println(l);
+		
+	}
 }
