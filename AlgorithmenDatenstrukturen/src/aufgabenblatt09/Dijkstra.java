@@ -23,27 +23,24 @@ public class Dijkstra {
 
 		do{
 			nextNode.finished = true;
+			boundary.remove(nextNode);
 
-			// add neighbours to boundary
+			// add neighbours to boundary,
+			// if a neighbour is already in boundary, check if the route usuing the new 'nextNode' is better
 			List<Node<T>> neighbours = graph.getNeighbours(nextNode.node);
 			for(Node<T> boundaryCandidate : neighbours){
 				DijkstraNode<T> n = nodeToDijkstraNode.get(boundaryCandidate);
 				if(n.finished == false){
-					int weight = graph.getWeight(boundaryCandidate, nextNode.node);
-					n.cost = nextNode.cost + weight;
-					n.next = nextNode;
-					boundary.add(n);
-				}
-			}
-
-			// for all considered nodes: if going over 'nextNode' is cheaper than the current way,
-			// set the way over "nextNode"
-			for(DijkstraNode<T> n : boundary){
-				if(graph.existsEdge(n.node, nextNode.node)){
-					int weight = graph.getWeight(n.node, nextNode.node);
-					if(n.cost > nextNode.cost + weight){
+					if(boundary.add(n)){
+						int weight = graph.getWeight(boundaryCandidate, nextNode.node);
 						n.cost = nextNode.cost + weight;
 						n.next = nextNode;
+					} else{
+						int weight = graph.getWeight(n.node, nextNode.node);
+						if(n.cost > nextNode.cost + weight){
+							n.cost = nextNode.cost + weight;
+							n.next = nextNode;
+						}
 					}
 				}
 			}
@@ -59,7 +56,6 @@ public class Dijkstra {
 			}
 			if(minNode == null) break; // boundary is empty, work done
 			nextNode = minNode;
-			boundary.remove(nextNode);
 		} while(boundary.size() > 0);
 
 		return nodeToDijkstraNode.values();
