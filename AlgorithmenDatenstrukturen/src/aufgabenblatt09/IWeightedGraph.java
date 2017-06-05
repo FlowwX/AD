@@ -1,5 +1,6 @@
 package aufgabenblatt09;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface IWeightedGraph<T> {
 	boolean existsEdge(Node<T> node1, Node<T> node2);
 	int getWeight(Node<T> node1, Node<T> node2);
 	Iterator<Node<T>> iterator();
+	Collection<Node<T>> getNodes();
 }
