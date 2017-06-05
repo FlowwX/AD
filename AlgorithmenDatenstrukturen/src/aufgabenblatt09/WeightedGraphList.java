@@ -13,6 +13,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	Map<Node<T>,List<Node<T>>> nodes = new HashMap<Node<T>,List<Node<T>>>();
 	Map<Node<T>,List<Edge<T>>> edges = new HashMap<Node<T>,List<Edge<T>>>();
 
+	public boolean directional = false;
 	
 	@Override
 	public void insert(WeightedEdge<T> newEdge) {
@@ -52,15 +53,16 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 				edges.get(newEdge.origin).add(newEdge);
 			}
 			
-			// for an nin-directional graph, also add the edge with swapped origin and destiny
-			if(!edges.containsKey(newEdge.destination)){
-				List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
-				edgeList.add(new WeightedEdge<T>(newEdge.destination, newEdge.origin, newEdge.getWeight()));
-				edgeList.add(new WeightedEdge<T>(newEdge.destination, newEdge.destination,0));
-				edges.put(newEdge.destination, edgeList);
-			}
-			else{
-				edges.get(newEdge.destination).add(new WeightedEdge<T>(newEdge.destination, newEdge.origin, newEdge.getWeight()));
+			// for an non-directional graph, also add the edge with swapped origin and destination
+			if(directional == false){
+				if(!edges.containsKey(newEdge.destination)){
+					List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
+					edgeList.add(new WeightedEdge<T>(newEdge.destination, newEdge.origin, newEdge.getWeight()));
+					edges.put(newEdge.destination, edgeList);
+				}
+				else{
+					edges.get(newEdge.destination).add(new WeightedEdge<T>(newEdge.destination, newEdge.origin, newEdge.getWeight()));
+				}
 			}
 		}
 		
@@ -79,6 +81,8 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 
 	@Override
 	public boolean existsEdge(Node<T> node1, Node<T> node2) {
+		if(node1.equals(node2)) return true;
+
 		List<Edge<T>> list  = edges.get(node1);
 		List<Edge<T>> list2 = edges.get(node2);
 		
@@ -103,7 +107,8 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 
 	@Override
 	public int getWeight(Node<T> node1, Node<T> node2) {
-			
+		if(node1.equals(node2)) return 0;
+		
 		if( existsEdge(node1, node2) ){
 			List<Edge<T>> list = edges.get(node1);
 			for(Edge<T> e : list){
