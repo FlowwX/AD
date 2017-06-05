@@ -1,12 +1,18 @@
 package aufgabenblatt09;
 
 /**
- * Generic Node with unique integer UID for a Graph. 
+ * Generic Node with unique integer UID for a Graph.
+ * The node holds a data payload of the generic type T.
+ * It only holds the payload, and does not use it in any way.
  */
 public class Node<T> {
 	public T payload;
 	public final int uid;
 
+	/**
+	 * uid of the next instance of a Node.
+	 * Must be used and then incremented in the constructor.
+	 */
 	private static int nextUid = 0;
 
 	public Node(){
@@ -18,6 +24,7 @@ public class Node<T> {
 		this.uid = nextUid++;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object o){
 		if(this == o) return true;
