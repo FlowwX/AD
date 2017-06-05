@@ -1,5 +1,7 @@
 package aufgabenblatt09;
 
+import java.util.Random;
+
 enum AdjacencyImplementation {MATRIX, LIST};
 public class WeightedGraphBuilder {
 	static <T> IWeightedGraph<T> getEmptyNodes(int nodeCount, AdjacencyImplementation impl){
@@ -15,8 +17,15 @@ public class WeightedGraphBuilder {
 			nodes[i] = new Node<T>(null);
 		}
 		
+		Random rnd = new Random();
+		for(int i = 0; i < nodeCount; i++){
+			int noNodes = rnd.nextInt(nodeCount)/4;
+			for(int j = 0; j < noNodes; j++)
+				graph.insert(new WeightedEdge<T>(nodes[i],nodes[rnd.nextInt(nodeCount)],rnd.nextInt(100)));
+		}
+		
 		for(int i = 0; i < nodeCount-1; i++){
-			graph.insert(new WeightedEdge<T>(nodes[i], nodes[i+1], 1));
+			graph.insert(new WeightedEdge<T>(nodes[i], nodes[i+1], rnd.nextInt(100)));
 		}
 		
 		return graph;
