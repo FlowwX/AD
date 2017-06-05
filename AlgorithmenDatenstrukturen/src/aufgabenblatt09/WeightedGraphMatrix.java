@@ -3,17 +3,19 @@ package aufgabenblatt09;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-public class WeightedAdjacencyMatrix implements WeightedAdjacency {
-	private HashMap<Node<?>, Integer> nodeIndMap;
+
+public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
+	private HashMap<Node<T>, Integer> nodeIndMap;
 	private int[][] mat;
 	private int[] conCount;
 	private int nextInd;
 
 	public boolean directional = false;
 
-	public WeightedAdjacencyMatrix(int nodes) {
+	public WeightedGraphMatrix(int nodes) {
 		mat = new int[nodes][nodes];
 		for (int i = 0; i < nodes; i++) {
 			for (int j = 0; j < nodes; j++) {
@@ -21,13 +23,12 @@ public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 			}
 		}
 		conCount = new int[nodes];
-		nodeIndMap = new HashMap<Node<?>, Integer>();
+		nodeIndMap = new HashMap<Node<T>, Integer>();
 		nextInd = 0;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void insert(WeightedEdge<?> newEdge) {
+	public void insert(WeightedEdge<T> newEdge) {
 		Integer originInd = nodeIndMap.putIfAbsent(newEdge.getOrigin(), nextInd);
 		if (originInd == null) {
 			originInd = nextInd;
@@ -46,19 +47,18 @@ public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 		conCount[destinationInd]++;
 
 		if (directional == false && !existsEdge(newEdge.getDestination(), newEdge.getOrigin()))
-			insert(new WeightedEdge(newEdge.getDestination(), newEdge.getOrigin(), newEdge.getWeight()));
+			insert(new WeightedEdge<T>(newEdge.getDestination(), newEdge.getOrigin(), newEdge.getWeight()));
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void delete(Node<?> node) {
-		for (Node<?> other : getNeighbours(node)) {
-			delete(new WeightedEdge(node, other, 0));
+	public void delete(Node<T> node) {
+		for (Node<T> other : getNeighbours(node)) {
+			delete(new WeightedEdge<T>(node, other, 0));
 		}
 	}
 
 	@Override
-	public void delete(WeightedEdge<?> edge) {
+	public void delete(WeightedEdge<T> edge) {
 		Integer originInd = nodeIndMap.get(edge.getOrigin());
 		Integer destinationInd = nodeIndMap.get(edge.getDestination());
 		if (originInd != null && destinationInd != null) {
@@ -79,11 +79,11 @@ public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 	}
 
 	@Override
-	public List<Node<?>> getNeighbours(Node<?> node) {
-		ArrayList<Node<?>> neighbours = new ArrayList<Node<?>>(mat.length);
+	public List<Node<T>> getNeighbours(Node<T> node) {
+		ArrayList<Node<T>> neighbours = new ArrayList<Node<T>>(mat.length);
 		Integer nodeInd = nodeIndMap.get(node);
 		if (nodeInd != null) {
-			for (Node<?> n2 : nodeIndMap.keySet()) {
+			for (Node<T> n2 : nodeIndMap.keySet()) {
 				if (n2 != node && existsEdge(node, n2))
 					neighbours.add(n2);
 			}
@@ -93,7 +93,7 @@ public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 	}
 
 	@Override
-	public boolean existsEdge(Node<?> node1, Node<?> node2) {
+	public boolean existsEdge(Node<T> node1, Node<T> node2) {
 		Integer node1Ind = nodeIndMap.get(node1);
 		Integer node2Ind = nodeIndMap.get(node2);
 		if (node1Ind != null && node2Ind != null && mat[node1Ind][node2Ind] != -1)
@@ -102,7 +102,7 @@ public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 	}
 
 	@Override
-	public int getWeight(Node<?> node1, Node<?> node2) {
+	public int getWeight(Node<T> node1, Node<T> node2) {
 		Integer node1Ind = nodeIndMap.get(node1);
 		Integer node2Ind = nodeIndMap.get(node2);
 		if (node1Ind != null && node2Ind != null && mat[node1Ind][node2Ind] != -1)
@@ -135,23 +135,12 @@ public class WeightedAdjacencyMatrix implements WeightedAdjacency {
 		}
 	}
 
-	public static void main(String[] args) {
-		WeightedAdjacencyMatrix wam = new WeightedAdjacencyMatrix(10);
-		Node<String> n1 = new Node<String>("N1");
-		Node<String> n2 = new Node<String>("N2");
-		Node<String> n3 = new Node<String>("N3");
-		wam.insert(new WeightedEdge<String>(n1, n2, 42));
-		wam.insert(new WeightedEdge<String>(n1, n3, 41));
-		System.out.println(wam);
-	}
-
-	@Override
-	public Collection<Node<?>> getNodes() {
+	public Collection<Node<T>> getNodes() {
 		return nodeIndMap.keySet();
 	}
-
-	/*
-	 * TODO: gerichtes/ungerichtes Einfuegen?
-	 * testen
-	 */
+	
+	@Override
+	public Iterator<Node<T>> iterator() {
+		return nodeIndMap.keySet().iterator();
+	}
 }

@@ -3,24 +3,25 @@ package aufgabenblatt09;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class WeightedAdjacencyList implements WeightedAdjacency {
+public class WeightedGraphList<T> implements IWeightedGraph<T> {
 
-	Map<Node<?>,List<Node<?>>> nodes = new HashMap<Node<?>,List<Node<?>>>();
-	Map<Node<?>,List<Edge<?>>> edges = new HashMap<Node<?>,List<Edge<?>>>();
+	Map<Node<T>,List<Node<T>>> nodes = new HashMap<Node<T>,List<Node<T>>>();
+	Map<Node<T>,List<Edge<T>>> edges = new HashMap<Node<T>,List<Edge<T>>>();
 
 	
 	@Override
-	public void insert(WeightedEdge<?> newEdge) {
+	public void insert(WeightedEdge<T> newEdge) {
 		
 		if(!existsEdge(newEdge.origin, newEdge.destination)){
 			
 			//check if nodes doesnt exist
 			if( !nodes.containsKey(newEdge.origin) ){
-				List<Node<?>> nodeList = new ArrayList<Node<?>>();
+				List<Node<T>> nodeList = new ArrayList<Node<T>>();
 				nodeList.add(newEdge.destination);
 				nodes.put(newEdge.origin, nodeList);
 				
@@ -31,7 +32,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 			
 			//check if nodes doesnt exist
 			if( !nodes.containsKey(newEdge.destination) ){
-				List<Node<?>> nodeList = new ArrayList<Node<?>>();
+				List<Node<T>> nodeList = new ArrayList<Node<T>>();
 				nodeList.add(newEdge.origin);
 				nodes.put(newEdge.destination, nodeList);	
 			}
@@ -41,7 +42,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 			
 			//maintain edges
 			if(!edges.containsKey(newEdge.origin)){
-				List<Edge<?>> edgeList = new ArrayList<Edge<?>>();
+				List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
 				edgeList.add(newEdge);
 				edges.put(newEdge.origin, edgeList);
 			}
@@ -51,7 +52,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 			
 			//maintain edges
 			if(!edges.containsKey(newEdge.destination)){
-				List<Edge<?>> edgeList = new ArrayList<Edge<?>>();
+				List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
 				edgeList.add(newEdge);
 				edges.put(newEdge.destination, edgeList);
 			}
@@ -63,23 +64,23 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 	}
 
 	@Override
-	public void delete(WeightedEdge<?> edge) {
+	public void delete(WeightedEdge<T> edge) {
 		edges.get(edge.origin).remove(edge);
 		edges.get(edge.destination).remove(edge);
 	}
 
 	@Override
-	public List<Node<?>> getNeighbours(Node<?> node) {
+	public List<Node<T>> getNeighbours(Node<T> node) {
 		return nodes.get(node);
 	}
 
 	@Override
-	public boolean existsEdge(Node<?> node1, Node<?> node2) {
-		List<Edge<?>> list  = edges.get(node1);
-		List<Edge<?>> list2 = edges.get(node2);
+	public boolean existsEdge(Node<T> node1, Node<T> node2) {
+		List<Edge<T>> list  = edges.get(node1);
+		List<Edge<T>> list2 = edges.get(node2);
 		
 		if(list!=null){
-			for(Edge<?> e : list){
+			for(Edge<T> e : list){
 				if(e.destination == node2){
 					return true;
 				}
@@ -87,7 +88,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 		}
 
 		if(list2!=null){
-			for(Edge<?> e : list2){
+			for(Edge<T> e : list2){
 				if(e.destination == node1){
 					return true;
 				}
@@ -98,11 +99,11 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 	}
 
 	@Override
-	public int getWeight(Node<?> node1, Node<?> node2) {
+	public int getWeight(Node<T> node1, Node<T> node2) {
 			
 		if( existsEdge(node1, node2) ){
-			List<Edge<?>> list = edges.get(node1);
-			for(Edge<?> e : list){
+			List<Edge<T>> list = edges.get(node1);
+			for(Edge<T> e : list){
 				if( e.destination == node2 || e.origin == node2){
 					return ((WeightedEdge<?>) e).getWeight();
 				}
@@ -113,12 +114,12 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 	}
 
 	@Override
-	public void delete(Node<?> node) {
+	public void delete(Node<T> node) {
 		edges.remove(node);
 		nodes.remove(node);
 		
 		//run through all remaining nodes and check if there is any connection to node
-		for (Map.Entry<Node<?>, List<Node<?>>> entry : nodes.entrySet()) {
+		for (Map.Entry<Node<T>, List<Node<T>>> entry : nodes.entrySet()) {
 			int indexOf = entry.getValue().indexOf(node);
 			if( indexOf >= 0 ){
 				//connection found, so remove
@@ -127,8 +128,8 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 				entry.getValue().remove(indexOf);
 				
 				//delete edges to node of current key
-				List<Edge<?>> edgesList = edges.get(entry.getKey());
-				for(Edge<?> e : edgesList){
+				List<Edge<T>> edgesList = edges.get(entry.getKey());
+				for(Edge<T> e : edgesList){
 					if(node == e.destination){
 						edgesList.remove(e);
 					}
@@ -139,8 +140,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 		
 	}
 
-	@Override
-	public Collection<Node<?>> getNodes() {
+	public Collection<Node<T>> getNodes() {
 		return nodes.keySet();
 	}
 	
@@ -149,7 +149,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 
 		String buffer = "";
 		
-		for (Map.Entry<Node<?>, List<Node<?>>> entry : nodes.entrySet()) {
+		for (Map.Entry<Node<T>, List<Node<T>>> entry : nodes.entrySet()) {
 			buffer += "Knoten: " + entry.getKey().uid;
 			
 			if(!entry.getValue().isEmpty()){
@@ -171,7 +171,7 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 				new WeightedAdjacencyList()
 		);*/
 		
-		WeightedAdjacencyList l = new WeightedAdjacencyList();
+		WeightedGraphList l = new WeightedGraphList();
 		
 		l.insert(new WeightedEdge<String>(new Node<String>(), new Node<String>(), 1));
 		
@@ -179,5 +179,10 @@ public class WeightedAdjacencyList implements WeightedAdjacency {
 		
 		System.out.println(l);
 		
+	}
+
+	@Override
+	public Iterator<Node<T>> iterator() {
+		return nodes.keySet().iterator();
 	}
 }

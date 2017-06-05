@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Dijkstra {
-	public static <T> List<DijkstraNode<T>> calculate(WeightedGraph<T> graph, Node<T> destination) {
+	public static <T> List<DijkstraNode<T>> calculate(IWeightedGraph<T> graph, Node<T> destination) {
 		
 		ArrayList<DijkstraNode<T>> nodes = new ArrayList<DijkstraNode<T>>();
 		LinkedList<Node<T>> nodes_ = new LinkedList<Node<T>>();
 		HashSet<DijkstraNode<T>> randliste = new HashSet<DijkstraNode<T>>();
 		
-		DijkstraNode<T> cDest = new DijkstraNode(destination, null, 0);
+		DijkstraNode<T> cDest = new DijkstraNode<T>(destination, null, 0);
 		nodes.add(cDest);
 		nodes_.add(destination);
 
@@ -56,12 +56,12 @@ public class Dijkstra {
 	}
 
 	public static void main(String[] args) {
-		WeightedGraph<Integer> wg = new WeightedGraph<>(
-				GraphWeightedAdjacencyFactory.getSpecialEmptyNodesAdjacency(10, AdjacencyImplementation.LIST));
+		IWeightedGraph<Integer> wg = WeightedGraphFactory.getSpecialEmptyNodesAdjacency(10, AdjacencyImplementation.LIST);
 		System.out.println(wg);
 
-		List<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) GraphWeightedAdjacencyFactory.dest);
-		System.out.println("To node no. " + GraphWeightedAdjacencyFactory.dest.uid);
+		@SuppressWarnings("unchecked")
+		List<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) WeightedGraphFactory.dest);
+		System.out.println("To node no. " + WeightedGraphFactory.dest.uid);
 		for (DijkstraNode<Integer> n : dijkstraResult) {
 			System.out.println("Node no. " + n.node.uid + ": costs " + n.cost + " over " + n.next.node.uid);
 		}
