@@ -4,12 +4,14 @@ public class DijkstraNode<T> {
 	public Node<T> node;
 	public DijkstraNode<T> next;
 	public int cost;
+	public boolean finished;
 
 	public DijkstraNode(Node<T> node, DijkstraNode<T> next, int cost) {
 		if(next == null) next = this;
 		this.node = node;
 		this.next = next;
 		this.cost = cost;
+		this.finished = false;
 	}
 
 	@Override
