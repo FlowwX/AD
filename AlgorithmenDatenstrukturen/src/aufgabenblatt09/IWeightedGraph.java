@@ -18,4 +18,10 @@ public interface IWeightedGraph<T> {
 	Collection<Node<T>> getNodes();
 	void toFile(String fPath);
 	void fromFile(String fPath);
+	
+	/*
+	 * File structure:
+	 * (Note: Node payload is disregarded)
+	 * <number of nodes><for every node: <node uid><for every neighbour:<neighbour-uid>><-1>>-1
+	 */
 }

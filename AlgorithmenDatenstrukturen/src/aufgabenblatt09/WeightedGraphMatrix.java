@@ -1,5 +1,9 @@
 package aufgabenblatt09;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -151,9 +155,60 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 	public Collection<Node<T>> getNodes() {
 		return nodeIndMap.keySet();
 	}
-	
+
 	@Override
 	public Iterator<Node<T>> iterator() {
 		return nodeIndMap.keySet().iterator();
+	}
+
+	@Override
+	public void toFile(String fPath){
+		try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(fPath))){
+			dos.writeInt(mat.length);
+			for(Node<T> node : nodeIndMap.keySet()){
+				dos.writeInt(node.uid);
+				for(Node<T> neighbour : getNeighbours(node)){
+					dos.writeInt(neighbour.uid);
+					dos.writeInt(getWeight(node, neighbour));
+				}
+				dos.writeInt(-1);
+			}
+			dos.writeInt(-1);
+		} catch(Exception e){
+			System.out.println(e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void fromFile(String fPath){
+		try (DataInputStream dis = new DataInputStream(new FileInputStream(fPath))){
+			nodeIndMap.clear();
+			int noOfNodes = dis.readInt();
+			mat = new int[noOfNodes][noOfNodes];
+			for (int i = 0; i < noOfNodes; i++) {
+				for (int j = 0; j < noOfNodes; j++) {
+					mat[i][j] = -1;
+				}
+			}
+			int read = dis.readInt();
+			while(read != -1){
+				// nodes loop
+				int nodeUid = read;
+				nodeIndMap.put(new Node<T>(null, nodeUid), nodeUid);
+				mat[nodeUid][nodeUid] = 0;
+				read = dis.readInt();
+				while(read != -1){
+					// neighbour loop
+					int neighbourUid = read;
+					nodeIndMap.put(new Node<T>(null, neighbourUid), neighbourUid);
+					mat[nodeUid][neighbourUid] = dis.readInt();
+					read = dis.readInt();
+				}
+				read = dis.readInt();
+			}
+
+		} catch(Exception e){
+			System.out.println(e.getStackTrace());
+		}
 	}
 }
