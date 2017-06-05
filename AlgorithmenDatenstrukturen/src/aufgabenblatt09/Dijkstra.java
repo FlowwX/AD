@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 public class Dijkstra {
 	public static <T> Collection<DijkstraNode<T>> calculate(IWeightedGraph<T> graph, Node<T> destination) {
@@ -62,12 +63,14 @@ public class Dijkstra {
 	}
 
 	public static void main(String[] args) {
-		IWeightedGraph<Integer> wg = WeightedGraphBuilder.getSpecialEmptyNodes(10, AdjacencyImplementation.MATRIX);
+		int nodeCount = 5;
+		IWeightedGraph<Integer> wg = WeightedGraphBuilder.getEmptyNodes(nodeCount, AdjacencyImplementation.LIST);
 		System.out.println(wg);
 
 		@SuppressWarnings("unchecked")
-		Collection<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) WeightedGraphBuilder.dest);
-		System.out.println("To node no. " + WeightedGraphBuilder.dest.uid);
+		Node<Integer> destination = (wg.getNodes().toArray(new Node[0]))[new Random().nextInt(nodeCount)];
+		Collection<DijkstraNode<Integer>> dijkstraResult = calculate(wg, destination);
+		System.out.println("To node no. " + destination.uid);
 		for (DijkstraNode<Integer> n : dijkstraResult) {
 			System.out.println("Node no. " + n.node.uid + ": costs " + n.cost + " over " + n.next.node.uid);
 		}
