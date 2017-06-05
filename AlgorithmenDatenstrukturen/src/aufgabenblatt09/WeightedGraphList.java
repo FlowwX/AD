@@ -22,9 +22,9 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			//check if nodes doesnt exist
 			if( !nodes.containsKey(newEdge.origin) ){
 				List<Node<T>> nodeList = new ArrayList<Node<T>>();
+				nodeList.add(newEdge.origin);
 				nodeList.add(newEdge.destination);
 				nodes.put(newEdge.origin, nodeList);
-				
 			}
 			else{
 				nodes.get(newEdge.origin).add(newEdge.destination);
@@ -34,7 +34,8 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			if( !nodes.containsKey(newEdge.destination) ){
 				List<Node<T>> nodeList = new ArrayList<Node<T>>();
 				nodeList.add(newEdge.origin);
-				nodes.put(newEdge.destination, nodeList);	
+				nodeList.add(newEdge.destination);
+				nodes.put(newEdge.destination, nodeList);
 			}
 			else{
 				nodes.get(newEdge.destination).add(newEdge.origin);
@@ -44,20 +45,22 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			if(!edges.containsKey(newEdge.origin)){
 				List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
 				edgeList.add(newEdge);
+				edgeList.add(new WeightedEdge<T>(newEdge.origin, newEdge.origin,0));
 				edges.put(newEdge.origin, edgeList);
 			}
 			else{
 				edges.get(newEdge.origin).add(newEdge);
 			}
 			
-			//maintain edges
+			// for an nin-directional graph, also add the edge with swapped origin and destiny
 			if(!edges.containsKey(newEdge.destination)){
 				List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
-				edgeList.add(newEdge);
+				edgeList.add(new WeightedEdge<T>(newEdge.destination, newEdge.origin, newEdge.getWeight()));
+				edgeList.add(new WeightedEdge<T>(newEdge.destination, newEdge.destination,0));
 				edges.put(newEdge.destination, edgeList);
 			}
 			else{
-				edges.get(newEdge.destination).add(newEdge);
+				edges.get(newEdge.destination).add(new WeightedEdge<T>(newEdge.destination, newEdge.origin, newEdge.getWeight()));
 			}
 		}
 		
@@ -104,7 +107,8 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		if( existsEdge(node1, node2) ){
 			List<Edge<T>> list = edges.get(node1);
 			for(Edge<T> e : list){
-				if( e.destination == node2 || e.origin == node2){
+				//if( e.destination == node2 || e.origin == node2){
+				if( e.destination == node2){
 					return ((WeightedEdge<?>) e).getWeight();
 				}
 			}
