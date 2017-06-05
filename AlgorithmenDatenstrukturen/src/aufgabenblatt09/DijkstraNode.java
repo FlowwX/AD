@@ -1,17 +1,13 @@
 package aufgabenblatt09;
 
-public class DijkstraNode<T> extends Node<T>{
+public class DijkstraNode<T> {
+	public Node<T> node;
 	public DijkstraNode<T> next;
 	public int cost;
 
 	public DijkstraNode(Node<T> node, DijkstraNode<T> next, int cost) {
-		this(node.payload, next, cost);
-	}
-	
-	public DijkstraNode(T payload, DijkstraNode<T> next, int cost) {
-		super(payload);
-		
 		if(next == null) next = this;
+		this.node = node;
 		this.next = next;
 		this.cost = cost;
 	}
@@ -21,13 +17,12 @@ public class DijkstraNode<T> extends Node<T>{
 		if(this == o) return true;
 		if(o == null) return false;
 		if(!(o instanceof DijkstraNode<?>)) return false;
-		@SuppressWarnings("unchecked")
 		DijkstraNode<T> on = (DijkstraNode<T>) o;
-		return this.uid == on.uid;
+		return this.node.equals(on.node);
 	}
 
 	@Override
 	public int hashCode(){
-		return this.uid;
+		return this.node.uid;
 	}
 }

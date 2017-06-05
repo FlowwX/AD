@@ -17,17 +17,17 @@ public class Dijkstra {
 		nodes_.add(destination);
 
 		do{
-			List<Node<T>> neighbours = graph.getNeighbours(cDest);
+			List<Node<T>> neighbours = graph.getNeighbours(cDest.node);
 			for(Node<T> randlistenKandidat : neighbours){
 				if(!nodes_.contains(randlistenKandidat)) {
-					int weight = graph.getWeight(randlistenKandidat, cDest);
+					int weight = graph.getWeight(randlistenKandidat, cDest.node);
 					randliste.add(new DijkstraNode<>(randlistenKandidat, cDest, cDest.cost + weight ));
 				}
 			}
 			
 			for(DijkstraNode<T> n : randliste){
-				if(graph.existsEdge(n, cDest)){
-					int weight = graph.getWeight(n, cDest);
+				if(graph.existsEdge(n.node, cDest.node)){
+					int weight = graph.getWeight(n.node, cDest.node);
 					if(n.cost > cDest.cost + weight){
 						n.cost = cDest.cost + weight;
 						n.next = cDest;
@@ -38,7 +38,7 @@ public class Dijkstra {
 			int minCost = Integer.MAX_VALUE;
 			DijkstraNode<T> minNode = null;
 			for(DijkstraNode<T> n : randliste){
-				if(graph.existsEdge(n, cDest)){
+				if(graph.existsEdge(n.node, cDest.node)){
 					if(n.cost < minCost){
 						minNode = n;
 						minCost = n.cost;
@@ -48,7 +48,7 @@ public class Dijkstra {
 			if(minNode == null) return nodes;
 			cDest = minNode;
 			nodes.add(cDest);
-			nodes_.add(cDest);
+			nodes_.add(cDest.node);
 			randliste.remove(cDest);
 		} while(randliste.size() > 0);
 
@@ -63,7 +63,7 @@ public class Dijkstra {
 		List<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) WeightedGraphFactory.dest);
 		System.out.println("To node no. " + WeightedGraphFactory.dest.uid);
 		for (DijkstraNode<Integer> n : dijkstraResult) {
-			System.out.println("Node no. " + n.uid + ": costs " + n.cost + " over " + n.next.uid);
+			System.out.println("Node no. " + n.node.uid + ": costs " + n.cost + " over " + n.next.node.uid);
 		}
 	}
 }
