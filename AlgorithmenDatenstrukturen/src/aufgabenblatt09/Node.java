@@ -23,6 +23,11 @@ public class Node<T> {
 		this.payload = payload;
 		this.uid = nextUid++;
 	}
+	
+	public Node(T payload, int uid){
+		this.payload = payload;
+		this.uid = uid;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
