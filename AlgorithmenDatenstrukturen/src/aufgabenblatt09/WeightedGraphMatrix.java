@@ -194,14 +194,11 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 			while(read != -1){
 				// nodes loop
 				int nodeUid = read;
-				nodeIndMap.put(new Node<T>(null, nodeUid), nodeUid);
-				mat[nodeUid][nodeUid] = 0;
 				read = dis.readInt();
 				while(read != -1){
 					// neighbour loop
 					int neighbourUid = read;
-					nodeIndMap.put(new Node<T>(null, neighbourUid), neighbourUid);
-					mat[nodeUid][neighbourUid] = dis.readInt();
+					insert(new WeightedEdge<T>(new Node<T>(null,nodeUid), new Node<T>(null,neighbourUid), dis.readInt()));
 					read = dis.readInt();
 				}
 				read = dis.readInt();
