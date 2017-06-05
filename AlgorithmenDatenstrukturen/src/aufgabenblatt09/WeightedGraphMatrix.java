@@ -42,6 +42,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 			calcNextInd();
 		}
 
+		if(mat[originInd][destinationInd] != -1) return;
 		mat[originInd][destinationInd] = newEdge.getWeight();
 		conCount[originInd]++;
 		conCount[destinationInd]++;
