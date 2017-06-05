@@ -119,7 +119,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 		for(Node<T> n : nodeIndMap.keySet())
 			legend[nodeIndMap.get(n)] = String.format("%2d ",n.uid);
 
-		output.append("    ");
+		output.append("       ");
 		for(int i = 0; i < legend.length; i++){
 			output.append(legend[i]);
 		}
@@ -127,7 +127,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 
 		output.append("[ ");
 		for (int i = 0; i < mat.length; i++) {
-			output.append("[ ");
+			output.append(legend[i]).append("[ ");
 			for (int j = 0; j < mat.length; j++) {
 				output.append(String.format("%2d", mat[i][j]) + " ");
 			}
@@ -147,6 +147,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 		}
 	}
 
+	@Override
 	public Collection<Node<T>> getNodes() {
 		return nodeIndMap.keySet();
 	}
