@@ -114,6 +114,17 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 	@Override
 	public String toString() {
 		StringBuilder output = new StringBuilder();
+
+		String[] legend = new String[mat.length];
+		for(Node<T> n : nodeIndMap.keySet())
+			legend[nodeIndMap.get(n)] = String.format("%2d ",n.uid);
+
+		output.append("    ");
+		for(int i = 0; i < legend.length; i++){
+			output.append(legend[i]);
+		}
+		output.append("\n");
+
 		output.append("[ ");
 		for (int i = 0; i < mat.length; i++) {
 			output.append("[ ");
