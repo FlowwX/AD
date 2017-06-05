@@ -160,8 +160,8 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			
 			if(!entry.getValue().isEmpty()){
 				buffer += " -> Nachbarn -> ";
-				for(Node<?> n : entry.getValue()){
-					buffer += n.uid + ", ";
+				for(Node<T> n : entry.getValue()){
+					buffer += n.uid + "(" + getWeight(entry.getKey(), n) + ")" + ", ";
 				}
 			}
 
