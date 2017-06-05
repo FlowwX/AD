@@ -175,7 +175,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 			}
 			dos.writeInt(-1);
 		} catch(Exception e){
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 		}
 	}
 
@@ -190,6 +190,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 					mat[i][j] = -1;
 				}
 			}
+			conCount = new int[noOfNodes];
 			int read = dis.readInt();
 			while(read != -1){
 				// nodes loop
@@ -205,7 +206,7 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 			}
 
 		} catch(Exception e){
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 		}
 	}
 }
