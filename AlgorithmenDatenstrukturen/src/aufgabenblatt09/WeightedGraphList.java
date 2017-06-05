@@ -1,5 +1,9 @@
 package aufgabenblatt09;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -174,23 +178,55 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		return buffer;
 	}
 
-	public static void main(String[] args) {
-		/*WeightedGraph<String> g = new WeightedGraph<String>(
-				new WeightedAdjacencyList()
-		);*/
-		
-		WeightedGraphList l = new WeightedGraphList();
-		
-		l.insert(new WeightedEdge<String>(new Node<String>(), new Node<String>(), 1));
-		
-		Set<?> k = l.edges.keySet();
-		
-		System.out.println(l);
-		
-	}
-
 	@Override
 	public Iterator<Node<T>> iterator() {
 		return nodes.keySet().iterator();
+	}
+
+	@Override
+	public void toFile(String fPath){
+		try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(fPath))){
+			dos.writeInt(nodes.size());
+			for(Node<T> node : nodes.keySet()){
+				dos.writeInt(node.uid);
+				for(Node<T> neighbour : getNeighbours(node)){
+					dos.writeInt(neighbour.uid);
+					dos.writeInt(getWeight(node, neighbour));
+				}
+				dos.writeInt(-1);
+			}
+			dos.writeInt(-1);
+		} catch(Exception e){
+			System.out.println(e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void fromFile(String fPath){
+		// the file describes a directional graph
+		boolean oldDirVal = directional;
+		directional = true;
+		try (DataInputStream dis = new DataInputStream(new FileInputStream(fPath))){
+			nodes.clear();
+			edges.clear();
+			dis.readInt(); // number of nodes, not needed here
+
+			int read = dis.readInt();
+			while(read != -1){
+				// nodes loop
+				int nodeUid = read;
+				read = dis.readInt();
+				while(read != -1){
+					// neighbour loop
+					int neighbourUid = read;
+					insert(new WeightedEdge<T>(new Node<T>(null, nodeUid), new Node<T>(null, neighbourUid), dis.readInt()));
+					read = dis.readInt();
+				}
+				read = dis.readInt();
+			}
+		} catch(Exception e){
+			System.out.println(e.getStackTrace());
+		}
+		directional = oldDirVal;
 	}
 }
