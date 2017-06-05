@@ -16,4 +16,6 @@ public interface IWeightedGraph<T> {
 	int getWeight(Node<T> node1, Node<T> node2);
 	Iterator<Node<T>> iterator();
 	Collection<Node<T>> getNodes();
+	void toFile(String fPath);
+	void fromFile(String fPath);
 }
