@@ -12,6 +12,10 @@ import java.util.List;
 
 
 public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
+	public int countNodeIndMapGet = 0;
+	public int countMapKeysGet = 0;
+	public int countMatAccess = 0;
+
 	private HashMap<Node<T>, Integer> nodeIndMap;
 	private int[][] mat;
 	private int[] conCount;
@@ -86,9 +90,9 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 	@Override
 	public List<Node<T>> getNeighbours(Node<T> node) {
 		ArrayList<Node<T>> neighbours = new ArrayList<Node<T>>(mat.length);
-		Integer nodeInd = nodeIndMap.get(node);
+		Integer nodeInd = nodeIndMap.get(node); /****************/countNodeIndMapGet++;
 		if (nodeInd != null) {
-			for (Node<T> n2 : nodeIndMap.keySet()) {
+			for (Node<T> n2 : nodeIndMap.keySet()) { /****************/countMapKeysGet++;
 				if (n2 != node && existsEdge(node, n2))
 					neighbours.add(n2);
 			}
@@ -99,8 +103,9 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 
 	@Override
 	public boolean existsEdge(Node<T> node1, Node<T> node2) {
-		Integer node1Ind = nodeIndMap.get(node1);
-		Integer node2Ind = nodeIndMap.get(node2);
+		Integer node1Ind = nodeIndMap.get(node1); /****************/countNodeIndMapGet++;
+		Integer node2Ind = nodeIndMap.get(node2); /****************/countNodeIndMapGet++;
+		 /****************/countMatAccess++;
 		if (node1Ind != null && node2Ind != null && mat[node1Ind][node2Ind] != -1)
 			return true;
 		return false;
@@ -108,8 +113,9 @@ public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
 
 	@Override
 	public int getWeight(Node<T> node1, Node<T> node2) {
-		Integer node1Ind = nodeIndMap.get(node1);
-		Integer node2Ind = nodeIndMap.get(node2);
+		Integer node1Ind = nodeIndMap.get(node1); /****************/countNodeIndMapGet++;
+		Integer node2Ind = nodeIndMap.get(node2); /****************/countNodeIndMapGet++;
+		 /****************/countMatAccess++;
 		if (node1Ind != null && node2Ind != null && mat[node1Ind][node2Ind] != -1)
 			return mat[node1Ind][node2Ind];
 		return -1;

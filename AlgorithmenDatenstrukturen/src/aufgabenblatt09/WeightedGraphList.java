@@ -13,6 +13,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class WeightedGraphList<T> implements IWeightedGraph<T> {
+	public int countNodeGet = 0;
+	public int countEdgeGet = 0;
+	public int countNodeListGet = 0;
+	public int countEdgeListGet = 0;
 
 	Map<Node<T>,List<Node<T>>> nodes = new HashMap<Node<T>,List<Node<T>>>();
 	Map<Node<T>,List<Edge<T>>> edges = new HashMap<Node<T>,List<Edge<T>>>();
@@ -78,7 +82,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	}
 
 	@Override
-	public List<Node<T>> getNeighbours(Node<T> node) {
+	public List<Node<T>> getNeighbours(Node<T> node) { /****************/countNodeGet++;
 		return nodes.get(node);
 	}
 
@@ -86,11 +90,11 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	public boolean existsEdge(Node<T> node1, Node<T> node2) {
 		if(node1.equals(node2)) return true;
 
-		List<Edge<T>> list  = edges.get(node1);
-		List<Edge<T>> list2 = edges.get(node2);
+		List<Edge<T>> list  = edges.get(node1); /****************/countEdgeGet++;
+		List<Edge<T>> list2 = edges.get(node2); /****************/countEdgeGet++;
 		
 		if(list!=null){
-			for(Edge<T> e : list){
+			for(Edge<T> e : list){ /****************/countEdgeListGet++;
 				if(e.destination == node2){
 					return true;
 				}
@@ -98,7 +102,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		}
 
 		if(list2!=null){
-			for(Edge<T> e : list2){
+			for(Edge<T> e : list2){ /****************/countEdgeListGet++;
 				if(e.destination == node1){
 					return true;
 				}
@@ -113,8 +117,8 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		if(node1.equals(node2)) return 0;
 
 		if( existsEdge(node1, node2) ){
-			List<Edge<T>> list = edges.get(node1);
-			for(Edge<T> e : list){
+			List<Edge<T>> list = edges.get(node1); /****************/countEdgeGet++;
+			for(Edge<T> e : list){ /****************/countEdgeListGet++;
 				//if( e.destination == node2 || e.origin == node2){
 				if( e.destination == node2){
 					return ((WeightedEdge<?>) e).getWeight();
