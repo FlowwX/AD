@@ -31,13 +31,15 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			}
 			
 			//check if nodes doesnt exist
-			if( !nodes.containsKey(newEdge.destination) ){
-				List<Node<T>> nodeList = new ArrayList<Node<T>>();
-				nodeList.add(newEdge.origin);
-				nodes.put(newEdge.destination, nodeList);
-			}
-			else{
-				nodes.get(newEdge.destination).add(newEdge.origin);
+			if(directional == false){
+				if( !nodes.containsKey(newEdge.destination) ){
+					List<Node<T>> nodeList = new ArrayList<Node<T>>();
+					nodeList.add(newEdge.origin);
+					nodes.put(newEdge.destination, nodeList);
+				}
+				else{
+					nodes.get(newEdge.destination).add(newEdge.origin);
+				}
 			}
 			
 			//maintain edges
