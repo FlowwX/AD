@@ -23,7 +23,6 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			//check if nodes doesnt exist
 			if( !nodes.containsKey(newEdge.origin) ){
 				List<Node<T>> nodeList = new ArrayList<Node<T>>();
-				nodeList.add(newEdge.origin);
 				nodeList.add(newEdge.destination);
 				nodes.put(newEdge.origin, nodeList);
 			}
@@ -35,7 +34,6 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			if( !nodes.containsKey(newEdge.destination) ){
 				List<Node<T>> nodeList = new ArrayList<Node<T>>();
 				nodeList.add(newEdge.origin);
-				nodeList.add(newEdge.destination);
 				nodes.put(newEdge.destination, nodeList);
 			}
 			else{
@@ -46,13 +44,12 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			if(!edges.containsKey(newEdge.origin)){
 				List<Edge<T>> edgeList = new ArrayList<Edge<T>>();
 				edgeList.add(newEdge);
-				edgeList.add(new WeightedEdge<T>(newEdge.origin, newEdge.origin,0));
 				edges.put(newEdge.origin, edgeList);
 			}
 			else{
 				edges.get(newEdge.origin).add(newEdge);
 			}
-			
+
 			// for an non-directional graph, also add the edge with swapped origin and destination
 			if(directional == false){
 				if(!edges.containsKey(newEdge.destination)){
@@ -108,7 +105,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	@Override
 	public int getWeight(Node<T> node1, Node<T> node2) {
 		if(node1.equals(node2)) return 0;
-		
+
 		if( existsEdge(node1, node2) ){
 			List<Edge<T>> list = edges.get(node1);
 			for(Edge<T> e : list){
