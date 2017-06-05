@@ -1,8 +1,8 @@
 package aufgabenblatt09;
 
 enum AdjacencyImplementation {MATRIX, LIST};
-public class WeightedGraphFactory {
-	static <T> IWeightedGraph<T> getEmptyNodesAdjacency(int nodeCount, AdjacencyImplementation impl){
+public class WeightedGraphBuilder {
+	static <T> IWeightedGraph<T> getEmptyNodes(int nodeCount, AdjacencyImplementation impl){
 		IWeightedGraph<T> graph;
 		if(impl == AdjacencyImplementation.MATRIX)
 			graph = new WeightedGraphMatrix<T>(nodeCount);
@@ -24,7 +24,7 @@ public class WeightedGraphFactory {
 	
 	static public Node<?> dest;
 	@SuppressWarnings({ "unchecked" })
-	static <T> IWeightedGraph<T> getSpecialEmptyNodesAdjacency(int nodeCount, AdjacencyImplementation impl){
+	static <T> IWeightedGraph<T> getSpecialEmptyNodes(int nodeCount, AdjacencyImplementation impl){
 		IWeightedGraph<T> graph;
 		if(impl == AdjacencyImplementation.MATRIX)
 			graph = new WeightedGraphMatrix<T>(nodeCount);

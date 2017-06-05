@@ -68,12 +68,12 @@ public class Dijkstra {
 	}
 
 	public static void main(String[] args) {
-		IWeightedGraph<Integer> wg = WeightedGraphFactory.getSpecialEmptyNodesAdjacency(10, AdjacencyImplementation.MATRIX);
+		IWeightedGraph<Integer> wg = WeightedGraphBuilder.getSpecialEmptyNodes(10, AdjacencyImplementation.MATRIX);
 		System.out.println(wg);
 
 		@SuppressWarnings("unchecked")
-		Collection<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) WeightedGraphFactory.dest);
-		System.out.println("To node no. " + WeightedGraphFactory.dest.uid);
+		Collection<DijkstraNode<Integer>> dijkstraResult = calculate(wg, (Node<Integer>) WeightedGraphBuilder.dest);
+		System.out.println("To node no. " + WeightedGraphBuilder.dest.uid);
 		for (DijkstraNode<Integer> n : dijkstraResult) {
 			System.out.println("Node no. " + n.node.uid + ": costs " + n.cost + " over " + n.next.node.uid);
 		}
