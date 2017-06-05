@@ -52,11 +52,9 @@ public class Dijkstra {
 			int minCost = Integer.MAX_VALUE;
 			DijkstraNode<T> minNode = null;
 			for(DijkstraNode<T> n : boundary){
-				if(graph.existsEdge(n.node, nextNode.node)){
-					if(n.cost < minCost){
-						minNode = n;
-						minCost = n.cost;
-					}
+				if(n.cost < minCost){
+					minNode = n;
+					minCost = n.cost;
 				}
 			}
 			if(minNode == null) break; // boundary is empty, work done
