@@ -91,7 +91,6 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		if(node1.equals(node2)) return true;
 
 		List<Edge<T>> list  = edges.get(node1); /****************/countEdgeGet++;
-		List<Edge<T>> list2 = edges.get(node2); /****************/countEdgeGet++;
 		
 		if(list!=null){
 			for(Edge<T> e : list){ /****************/countEdgeListGet++;
@@ -99,14 +98,6 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 					return true;
 				}
 			}
-		}
-
-		if(list2!=null){
-			for(Edge<T> e : list2){ /****************/countEdgeListGet++;
-				if(e.destination == node1){
-					return true;
-				}
-			}	
 		}
 
 		return false;
