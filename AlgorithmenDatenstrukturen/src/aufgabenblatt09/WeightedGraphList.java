@@ -18,7 +18,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	public long countNodeListGet = 0;
 	public long countEdgeListGet = 0;
 
-	Map<Node<T>,List<Node<T>>> nodes = new HashMap<Node<T>,List<Node<T>>>();
+	//Map<Node<T>,List<Node<T>>> nodes = new HashMap<Node<T>,List<Node<T>>>();
 	Map<Node<T>,List<Edge<T>>> edges = new HashMap<Node<T>,List<Edge<T>>>();
 
 	public boolean directional = false;
@@ -28,27 +28,27 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		
 		if(!existsEdge(newEdge.origin, newEdge.destination)){
 			
-			//check if nodes doesnt exist
-			if( !nodes.containsKey(newEdge.origin) ){
-				List<Node<T>> nodeList = new ArrayList<Node<T>>();
-				nodeList.add(newEdge.destination);
-				nodes.put(newEdge.origin, nodeList);
-			}
-			else{
-				nodes.get(newEdge.origin).add(newEdge.destination);
-			}
-			
-			//check if nodes doesnt exist
-			if(directional == false){
-				if( !nodes.containsKey(newEdge.destination) ){
-					List<Node<T>> nodeList = new ArrayList<Node<T>>();
-					nodeList.add(newEdge.origin);
-					nodes.put(newEdge.destination, nodeList);
-				}
-				else{
-					nodes.get(newEdge.destination).add(newEdge.origin);
-				}
-			}
+//			//check if nodes doesnt exist
+//			if( !nodes.containsKey(newEdge.origin) ){
+//				List<Node<T>> nodeList = new ArrayList<Node<T>>();
+//				nodeList.add(newEdge.destination);
+//				nodes.put(newEdge.origin, nodeList);
+//			}
+//			else{
+//				nodes.get(newEdge.origin).add(newEdge.destination);
+//			}
+//			
+//			//check if nodes doesnt exist
+//			if(directional == false){
+//				if( !nodes.containsKey(newEdge.destination) ){
+//					List<Node<T>> nodeList = new ArrayList<Node<T>>();
+//					nodeList.add(newEdge.origin);
+//					nodes.put(newEdge.destination, nodeList);
+//				}
+//				else{
+//					nodes.get(newEdge.destination).add(newEdge.origin);
+//				}
+//			}
 			
 			//maintain edges
 			if(!edges.containsKey(newEdge.origin)){
@@ -83,7 +83,12 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 
 	@Override
 	public List<Node<T>> getNeighbours(Node<T> node) { /****************/countNodeGet++;
-		return nodes.get(node);
+		//return nodes.get(node);
+		ArrayList<Node<T>> neighbours = new ArrayList<Node<T>>(edges.get(node).size());
+		for(Edge<T> e : edges.get(node))
+			neighbours.add(e.destination);
+		
+		return neighbours;
 	}
 
 	@Override
@@ -121,7 +126,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	@Override
 	public void delete(Node<T> node) {
 		edges.remove(node);
-		nodes.remove(node);
+		/*nodes.remove(node);
 		
 		//run through all remaining nodes and check if there is any connection to node
 		for (Map.Entry<Node<T>, List<Node<T>>> entry : nodes.entrySet()) {
@@ -140,20 +145,25 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 					}
 				}
 			}
-		}
+		}*/
 			
 		
 	}
 
 	public Collection<Node<T>> getNodes() {
-		return nodes.keySet();
+		//return nodes.keySet();
+		ArrayList<Node<T>> nodes = new ArrayList<Node<T>>(edges.keySet().size());
+		for(Node<T> e : edges.keySet())
+			nodes.add(e);
+		
+		return nodes;
 	}
 	
 	@Override
 	public String toString() {
 
 		String buffer = "";
-		
+		/*
 		for (Map.Entry<Node<T>, List<Node<T>>> entry : nodes.entrySet()) {
 			buffer += "Knoten: " + entry.getKey().uid;
 			
@@ -167,20 +177,23 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 			buffer += "\n";
 		}
 		
-		
+		*/
 		return buffer;
 	}
 
 	@Override
 	public Iterator<Node<T>> iterator() {
-		return nodes.keySet().iterator();
+		//return nodes.keySet().iterator();
+		return null;
 	}
 
 	@Override
 	public void toFile(String fPath){
 		try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(fPath))){
-			dos.writeInt(nodes.size());
-			for(Node<T> node : nodes.keySet()){
+			//dos.writeInt(nodes.size());
+			dos.writeInt(edges.keySet().size());
+			//for(Node<T> node : nodes.keySet()){
+			for(Node<T> node : edges.keySet()){
 				dos.writeInt(node.uid);
 				for(Node<T> neighbour : getNeighbours(node)){
 					dos.writeInt(neighbour.uid);
@@ -200,7 +213,7 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 		boolean oldDirVal = directional;
 		directional = true;
 		try (DataInputStream dis = new DataInputStream(new FileInputStream(fPath))){
-			nodes.clear();
+			//nodes.clear();
 			edges.clear();
 			dis.readInt(); // number of nodes, not needed here
 
