@@ -19,7 +19,8 @@ public class WeightedGraphBuilder {
 		
 		Random rnd = new Random();
 		for(int i = 0; i < nodeCount; i++){
-			int noNodes = rnd.nextInt(nodeCount)/4;
+			//int noNodes = rnd.nextInt(nodeCount)/4;
+			int noNodes = rnd.nextInt(2*(int)Math.round(Math.log10(nodeCount)));
 			for(int j = 0; j < noNodes; j++)
 				graph.insert(new WeightedEdge<T>(nodes[i],nodes[rnd.nextInt(nodeCount)],rnd.nextInt(100)));
 		}
