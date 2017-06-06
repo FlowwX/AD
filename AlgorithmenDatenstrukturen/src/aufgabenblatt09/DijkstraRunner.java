@@ -9,28 +9,28 @@ public class DijkstraRunner {
 		dc.newLog("Matrix", "N", "counters");
 		dc.newLog("List", "N", "counters");
 		
-		for(int numNodes = 10; numNodes <= 1000; numNodes *= 10){
-			IWeightedGraph<Object> graph =WeightedGraphBuilder.getEmptyNodes(numNodes, AdjacencyImplementation.MATRIX);
+		for(int numNodes = 10; numNodes <= 10000; numNodes *= 10){
+			IWeightedGraph<Object> graph = WeightedGraphBuilder.getEmptyNodes(numNodes, AdjacencyImplementation.MATRIX);
 			graph.toFile(fPath);
-			
-			WeightedGraphMatrix<Object> graphMatrix = new WeightedGraphMatrix<Object>(0);
-			WeightedGraphList<Object> graphList = new WeightedGraphList<Object>();
-			
-			graphMatrix.fromFile(fPath);
-			graphList.fromFile(fPath);
-			
 			@SuppressWarnings("unchecked")
 			Node<Object> destination = (Node<Object>) graph.getNodes().toArray()[new Random().nextInt(numNodes)];
+			graph = null;
+			
+			WeightedGraphMatrix<Object> graphMatrix = new WeightedGraphMatrix<Object>(0);
+			graphMatrix.fromFile(fPath);
 			clearCounters(graphMatrix);
 			Dijkstra.calculate(graphMatrix, destination);
 			System.out.println("Finished Matrix for " + numNodes);
+			dc.log("Matrix", numNodes, graphMatrix.countMapKeysGet+graphMatrix.countMatAccess+graphMatrix.countNodeIndMapGet);
+			graphMatrix = null;
 			
+			WeightedGraphList<Object> graphList = new WeightedGraphList<Object>();
+			graphList.fromFile(fPath);
 			clearCounters(graphList);
 			Dijkstra.calculate(graphList, destination);
 			System.out.println("Finished List for " + numNodes);
-			
-			dc.log("Matrix", numNodes, graphMatrix.countMapKeysGet+graphMatrix.countMatAccess+graphMatrix.countNodeIndMapGet);
 			dc.log("List", numNodes, graphList.countEdgeGet+graphList.countEdgeListGet+graphList.countNodeGet+graphList.countNodeListGet);
+			graphList = null;
 		}
 		
 		dc.print("Matrix");
