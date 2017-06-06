@@ -107,17 +107,15 @@ public class WeightedGraphList<T> implements IWeightedGraph<T> {
 	public int getWeight(Node<T> node1, Node<T> node2) {
 		if(node1.equals(node2)) return 0;
 
-		if( existsEdge(node1, node2) ){
-			List<Edge<T>> list = edges.get(node1); /****************/countEdgeGet++;
-			for(Edge<T> e : list){ /****************/countEdgeListGet++;
-				//if( e.destination == node2 || e.origin == node2){
-				if( e.destination == node2){
-					return ((WeightedEdge<?>) e).getWeight();
-				}
+		List<Edge<T>> list = edges.get(node1); /****************/countEdgeGet++;
+		for(Edge<T> e : list){ /****************/countEdgeListGet++;
+			//if( e.destination == node2 || e.origin == node2){
+			if( e.destination == node2){
+				return ((WeightedEdge<?>) e).getWeight();
 			}
 		}
 			
-		return 0;
+		return -1;
 	}
 
 	@Override
