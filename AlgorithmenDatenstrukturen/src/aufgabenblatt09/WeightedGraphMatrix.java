@@ -12,9 +12,9 @@ import java.util.List;
 
 
 public class WeightedGraphMatrix<T> implements IWeightedGraph<T> {
-	public int countNodeIndMapGet = 0;
-	public int countMapKeysGet = 0;
-	public int countMatAccess = 0;
+	public long countNodeIndMapGet = 0;
+	public long countMapKeysGet = 0;
+	public long countMatAccess = 0;
 
 	private HashMap<Node<T>, Integer> nodeIndMap;
 	private int[][] mat;

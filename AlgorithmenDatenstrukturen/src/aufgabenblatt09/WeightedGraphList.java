@@ -13,10 +13,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class WeightedGraphList<T> implements IWeightedGraph<T> {
-	public int countNodeGet = 0;
-	public int countEdgeGet = 0;
-	public int countNodeListGet = 0;
-	public int countEdgeListGet = 0;
+	public long countNodeGet = 0;
+	public long countEdgeGet = 0;
+	public long countNodeListGet = 0;
+	public long countEdgeListGet = 0;
 
 	Map<Node<T>,List<Node<T>>> nodes = new HashMap<Node<T>,List<Node<T>>>();
 	Map<Node<T>,List<Edge<T>>> edges = new HashMap<Node<T>,List<Edge<T>>>();
