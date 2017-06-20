@@ -69,6 +69,8 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 	}
 
 	private customArray<T> arr;
+	private int[] indCache = {0,0,0,0,0};
+	private int indCachePos = 0;
 
 	/**
 	 * Default Constructor. Creates ArrayTree without specifying initial array
@@ -174,13 +176,17 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 	 * Binary search
 	 */
 	private int getIndexOf(T item) {
-		int i = 1;
+		int cacheRes = queryCache(item);
+		if(cacheRes != -1) return cacheRes;
 
+		int i = 1;
 		T node = arr.get(i);
 		while (node != null) {
 			int cmp = item.compareTo(node);
-			if (cmp == 0)
+			if (cmp == 0){
+				indCache[(indCachePos++)%indCache.length] = i;
 				return i;
+			}
 			else if (cmp < 0)
 				i = getLeftChildInd(i);
 			else
@@ -188,6 +194,14 @@ public class ArrayTree<T extends Comparable<T>> extends Tree<T> {
 			node = arr.get(i);
 		}
 		return 0;
+	}
+
+	private int queryCache(T item){
+		for(int i = 0; i < indCache.length; i++){
+			if(item.equals(arr.get(indCache[i])))
+				return indCache[i];
+		}
+		return -1;
 	}
 
 	@Override
